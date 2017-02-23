@@ -1,0 +1,93 @@
+﻿@model IEnumerable<Menajes_Maipu.Models.ModeloBD.Ventas>
+
+@{
+    var id = Session["id"];
+}
+
+<section id="cart_items">
+    <div class="container">
+        @if (ViewBag.Estado == "Exito")
+        {
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Compra realizada con exito</strong> Para consultar el estado de sus pedidos revise la tabla inferior
+            </div>
+        }
+        <div class="breadcrumbs">
+            <ol class="breadcrumb">
+                <li><a href=@Url.Action("Index","Home")>Volver</a></li>
+                <li class="active">Bandeja de entrada</li>
+            </ol>
+        </div>
+
+        <div class="table-responsive cart_info" style="overflow-y:auto; height:800px;">
+            <table class="table table-condensed table-responsive table-hover">
+                <thead>
+
+                    <tr class="cart_menu">
+                        <th>
+                            Id
+                        </th>
+                        <th>
+                            Fecha
+                        </th>
+                        <th>
+                            Total
+                        </th>
+                        <th>
+                            Estado
+                        </th>
+
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                @foreach (Menajes_Maipu.Models.ModeloBD.Ventas item in ViewBag.Lista)
+                {
+
+                    <tbody>
+
+                        <tr>
+
+
+                            <td>
+                                <h4><b>  @Html.DisplayFor(modelItem => item.Id_ventas)</b>    </h4>
+                            </td>
+                            <td>
+                                <h4><b>  @Html.DisplayFor(modelItem => item.Hora_venta)</b>     </h4>
+                            </td>
+                            <td>
+                                <h4><b>  @Html.DisplayFor(modelItem => item.Total_venta)</b>     </h4>
+                            </td>
+                            <td>
+                                <h4><b> @Html.DisplayFor(modelItem => item.Estado)  </b>    </h4>
+                            </td>
+
+
+                            @using (Html.BeginForm("PedidosDetalle", "Usuario", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal form-label-left" }))
+                            {
+
+                                <td>
+                                    <input type="text" class="hidden" name="id_user" value="@item.id_user" />
+                                    <input type="text" class="hidden" name="id_venta" value="@item.Id_ventas" />
+                                    <h4><input type="submit" class="btn btn-warning" value="Ver Detalle" /></h4>
+                                </td>
+                            }
+
+                            @using (Html.BeginForm("DetalleVentaDebito", "Usuario", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal form-label-left" }))
+                            {
+
+                                <td>
+                                    <input type="text" class="hidden" name="id_user" value="@item.id_user" />
+                                    <input type="text" class="hidden" name="id_venta" value="@item.Id_ventas" />
+                                    <h4><input type="submit" class="btn btn-warning" value="Ver PDF" /></h4>
+                                </td>
+                            }
+
+                    </tbody>
+                }
+            </table>
+        </div>
+    </div>
+</section> <!--/#cart_items-->

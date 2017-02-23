@@ -1,0 +1,137 @@
+﻿@model Menajes_Maipu.Models.ModeloBD.Producto
+
+@{
+    var user = Session["user"];
+    var id = Session["id"];
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Ladmin.cshtml";
+}
+
+<!-- page content -->
+<div class="right_col" role="main">
+
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>
+                    Formulario Productos
+                </h3>
+            </div>
+
+
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <a href="Index"><h2>Producto</h2> </a>  <h2><small>Ingresar</small></h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <h2><b>Información necesaria *</b></h2>
+
+
+                        @using (Html.BeginForm("ProductosCreate", "Dashboard", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal form-label-left" }))
+                        {
+
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                                    Nombre <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @Html.EditorFor(model => model.Nombre_producto, new { htmlAttributes = new { @class = "form-control", required = "required", placeholder = "Ej: Vaso Chico", @pattern = "[a-zA-Z0-9 ]+", @title = "Caracteres inválidos" } })
+                                    @Html.ValidationMessageFor(model => model.Nombre_producto, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">
+                                        Descripcion <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        @Html.EditorFor(model => model.Descripcion_producto, new { htmlAttributes = new { @class = "form-control", required = "required", @pattern = "[a-zA-Z0-9 ]+", @title = "Caracteres inválidos" } })
+                                        @Html.ValidationMessageFor(model => model.Descripcion_producto, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">
+                                        Stock <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        @Html.EditorFor(model => model.Stock_producto, new { htmlAttributes = new { @class = "form-control", required = "required", @pattern = "[0-9]", @title = "Ingrese solo números" } })
+                                        @Html.ValidationMessageFor(model => model.Stock_producto, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">
+                                        Precio <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        @Html.EditorFor(model => model.Precio_producto, new { htmlAttributes = new { @class = "form-control", required = "required", @pattern = "[0-9]", @title = "Ingrese solo números" } })
+                                        @Html.ValidationMessageFor(model => model.Precio_producto, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="website">
+                                        Subcategoria <span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        @Html.DropDownList("Id_subcategoria", new SelectList(ViewBag.Todo, "Id_subcategoria", "Nombre_subcategoria"), new { htmlAtributes = new { @class = "form-control input-sm" } })
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    @*<label class="control-label col-md-3 col-sm-3 col-xs-12" for="occupation">
+                                            Nombre Img <span class="required">*</span>
+                                        </label>*@
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+
+
+
+                                        @Html.EditorFor(model => model.Nombre_imagen, new { htmlAttributes = new { @class = "form-control", required = "required", style = "display:none", @Value = "imagen" } })
+                                        @Html.ValidationMessageFor(model => model.Nombre_imagen, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label for="password" class="control-label col-md-3">Imagen *</label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="file" name="imagen" id="imagen" class="btn btn-default" required="required" />
+                                    </div>
+                                </div>
+
+
+                                <div class="ln_solid"></div>
+                                <div class="form-group">
+                                    <div class="col-md-6 col-md-offset-3">
+
+                                        <button type="submit" class="btn btn-success">Enviar</button>
+                                        @Html.ActionLink("Volver al listado", "ProductosList", "Dashboard", new { }, new { @class = "btn btn-info" })
+
+
+                                    </div>
+                                </div>
+
+
+                        }
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer content -->
+    <footer>
+        <div class="">
+            <p class="pull-right">
+                <a>RGL</a>
+            </p>
+        </div>
+        <div class="clearfix"></div>
+    </footer>
+    <!-- /footer content -->
+
+</div>
+<!-- /page content -->

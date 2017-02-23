@@ -1,0 +1,159 @@
+﻿@model IEnumerable<Menajes_Maipu.Models.ModeloBD.Usuario>
+@using PagedList.Mvc;
+@using PagedList;
+
+@{
+    var user = Session["user"];
+    var id = Session["id"];
+    Layout = "~/Views/Shared/_Ladmin.cshtml";
+}
+    
+
+<!-- page content -->
+<div class="right_col" role="main">
+        <div class="">
+
+            <div class="page-title">
+                <div class="title_left">
+                    <h3>
+                       Listado de Usuarios
+                       
+                    </h3>
+                </div>
+
+                <div class="title_right">
+                   
+
+                </div>
+            </div>
+            <div class="clearfix"></div>
+
+
+            <div class="row">
+
+                <div class="col-md-12 col-sm-12 col-xs-12" align="center">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2> <a href=@Url.Action("CrearUsuario", "Usuario") class="btn btn-success"> Crear Usuario</a></h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li>
+                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                               
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content" align="left">
+                     
+                            <table class="table" align="center">
+                                <tr>
+                                    <th>
+                                        Rut
+                                    </th>
+                                    <th>
+                                        Nombre
+                                    </th>
+                                    <th>
+                                        Apellido
+                                    </th>
+                                    <th>
+                                        Sexo
+                                    </th>
+                                    <th>
+                                        E-Mail
+                                    </th>
+                                    <th>
+                                        Teléfono
+                                    </th>
+                                    <th>
+                                        Password
+                                    </th>
+                                    <th>
+                                        Tipo
+                                    </th>
+                                    <th>
+                                        Registrado
+                                    </th>
+                                 
+                                    <th></th>
+                                </tr>
+
+                                @foreach (Menajes_Maipu.Models.ModeloBD.Usuario item in ViewBag.Lista)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Rut)
+                                        </td>
+                                   
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Nombre_usuario)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Apellido_usuario)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Sexo)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Email_usuario)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Telefono_usuario)
+                                        </td>
+                                       
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Contrasena)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Tipo)
+                                        </td>
+
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Fecha_registro)
+                                        </td>
+                                   
+                                        <td>
+                                     
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                    <ul class="pagination">
+                        <li>
+                            @Html.PagedListPager((IPagedList)ViewBag.Lista, page => Url.Action("Lista", new { page }))
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- footer content -->
+        <footer>
+            <div class="">
+                <p class="pull-right">
+                   RGL
+                </p>
+            </div>
+            <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+    </div>
+<!-- /page content -->
+
+
+
+
+
+
+
+

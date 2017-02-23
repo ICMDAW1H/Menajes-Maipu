@@ -1,0 +1,295 @@
+﻿
+@model IEnumerable<Menajes_Maipu.Models.ModeloBD.VentaDetalle_Result>
+
+@{
+    ViewBag.Title = "PedidosDetalle";
+    int id_ventas = ViewBag.Id_ventas;
+}
+<script src="~/Scripts/jquery-1.7.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<section id="cart_items">
+    <div class="container">
+        @*<div class="breadcrumbs">
+                <ol class="breadcrumb">
+                    <li><a href=@Url.Action("Pedidos","Usuario")>Volver</a></li>
+                    <li class="active">Detalle de venta</li>
+                </ol>
+            </div>*@
+
+        <div class="row">
+
+            <div class="table-condensed table-responsive cart_info col-sm-12">
+                <h2 class="title text-center">Datos <strong> de la venta</strong></h2>
+                <table class="table table-responsive">
+
+
+                    @foreach (var item in ViewBag.Detalle)
+            {
+                      
+                        <thead>
+                            <tr>
+                                <td class="description"><p><b>Número de venta</b></p></td>
+                                <td class="description"><p><b>Estado de la venta</b></p></td>
+                                <td class="description"><p><b>Metodo de pago</b></p></td>
+                                <td class="description"><p><b>Estado del despacho</b></p></td>
+                                <td class="description"><p><b>Fecha de Envio</b></p></td>
+                                <td class="description"><p><b>Fecha de Entrega</b></p></td>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td class="cart_description">
+                                    <p>@item.Id_ventas</p>
+                                </td>
+                                <td class="cart_description">
+                                    <p>@item.Estado</p>
+                                </td>
+
+                                <td class="cart_description">
+                                    <p>@item.Tipo_mpago</p>
+                                </td>
+
+                                <td class="cart_description">
+                                    <p> @item.Estado_despacho</p>
+                                </td>
+
+                                <td class="cart_description">
+                                    <p> @item.Fecha_envio</p>
+                                </td>
+
+                                <td class="cart_description">
+                                    <p> @item.Fecha_entrega</p>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                        break;
+                    }
+                </table>
+            </div>
+
+
+            <div class="table-condensed table-responsive cart_info col-sm-12">
+                <h2 class="title text-center">Cuenta <strong> a depositar</strong></h2>
+                <table class="table table-responsive">
+
+
+                    @foreach (var item in ViewBag.Detalle)
+            {
+
+                        <thead>
+                            <tr>
+                                <td class="description"><p><b>Número de Cuenta</b></p></td>
+                                <td class="description"><p><b>Banco</b></p></td>
+                                <td class="description"><p><b>Titular</b></p></td>
+                                <td class="description"><p><b>Tipo de Cuenta</b></p></td>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td class="cart_description">
+                                    <p>@item.Num_cuenta</p>
+                                </td>
+                                <td class="cart_description">
+                                    <p>@item.Nombre_cuenta</p>
+                                </td>
+
+                                <td class="cart_description">
+                                    <p>@item.Nombre_titular</p>
+                                </td>
+
+                                <td class="cart_description">
+                                    <p>@item.Tipo_cuenta</p>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                        break;
+                    }
+                </table>
+            </div>
+
+
+
+
+
+
+
+            <div class="table-condensed table-responsive cart_info col-sm-6">
+                <h2 class="title text-center">Datos <strong> del cliente</strong></h2>
+                <table class="table">
+
+
+                    @foreach (var item in ViewBag.Detalle)
+                    {
+
+
+                        <tr>
+                            <td class="description"><p><b>Señor(es)</b></p></td>
+
+                            <td class="cart_description">
+                                <p>@item.Nombre_usuario @item.Apellido_usuario</p>
+                            </td>
+
+                        </tr>
+                            <tr>
+                                <td class="description"><p><b>Rut</b></p></td>
+
+                                <td class="cart_description">
+                                    <p>@item.rut</p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="description"><p><b>Email</b></p></td>
+
+                                <td class="cart_description">
+                                    <p>@item.Email_usuario</p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="description"><p><b>Telefono</b></p></td>
+
+                                <td class="cart_description">
+                                    <p>@item.Telefono_usuario</p>
+                                </td>
+                            </tr>
+
+                        if (@item.Tipo_mpago == "Debito")
+                        {
+                            <tr>
+                                <td class="description"><p><b>Direccion</b></p></td>
+
+                                <td class="cart_description">
+                                    <p> @item.Calle, @item.Numero, @item.Comuna, @item.Ciudad</p>
+                                </td>
+                            </tr>
+
+
+                                <tr>
+                                    <td class="description"><p><b>Codigo Postal</b></p></td>
+
+                                    <td class="cart_description">
+                                        <p>@item.Cod_postal</p>
+                                    </td>
+                                </tr>
+                        }
+
+                        break;
+                    }
+
+
+
+
+                </table>
+            </div>
+
+     
+            @foreach (var item in ViewBag.Detalle)
+            {
+
+                if (@item.Tipo_mpago == "Debito")
+                {
+                    <div class="table-condensed table-responsive cart_info col-sm-5 pull-right" id="Debito">
+                        <h2 class="title text-center">
+                            @Ajax.ActionLink("Verificar Estado Deposito", "DebitoDetalle", new { ID = id_ventas }, new AjaxOptions
+                  {
+                      HttpMethod = "GET",
+                      UpdateTargetId = "Debito",
+                      InsertionMode = InsertionMode.Replace,
+
+                  }, new { @class = "btn btn-warning" })
+
+
+                        </h2>
+                    </div>
+                }
+
+                break;
+            }
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+        <div class="row">
+
+
+            <div class="table-responsive cart_info col-sm-12">
+                <h2 class="title text-center">Detalle <strong> de productos</strong></h2>
+                <table class="table table-condensed">
+                    <thead>
+                        <tr class="cart_menu">
+                            <td class="product"><p>Producto</p></td>
+                            <td class="description"><p>Detalle</p></td>
+                            <td class="price"><p>Cantidad</p></td>
+                            <td class="price"><p>Precio</p></td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in ViewBag.Detalle)
+                        {
+
+
+                            <tr>
+                                <td class="cart_description">
+                                    <h4><p>@item.Nombre_producto</p></h4>
+                                </td>
+                                <td class="cart_description">
+                                    <h4><p>@item.Descripcion_producto</p></h4>
+                                </td>
+                                <td class="cart_price">
+                                    <h4><p>@item.Cantidad</p></h4>
+                                </td>
+                                <td class="cart_total">
+                                    <p class="cart_total_price">$ @item.Precio_p</p>
+                                </td>
+                            </tr>
+                        }
+
+                        @foreach (var item in ViewBag.Detalle)
+                        {
+                            <tr>
+                                <td colspan="2">&nbsp;</td>
+                                <td colspan="3">
+                                    <table class="table table-condensed">
+
+                                        <tr>
+                                            <td class="description"><h4><p>Total</p></h4></td>
+                                            <td></td>
+                                            <td class="cart_total"><p class="cart_total_price">$ @item.Total_venta</p></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            break;
+                        }
+
+
+
+
+
+                    </tbody>
+
+                </table>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section> <!--/#cart_items-->

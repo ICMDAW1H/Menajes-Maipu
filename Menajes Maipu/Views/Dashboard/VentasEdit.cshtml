@@ -1,0 +1,179 @@
+﻿
+@{
+    var user = Session["user"];
+    var id = Session["id"];
+
+    var Id_venta = ViewBag.Id_ventas;
+
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Ladmin.cshtml";
+}
+
+<!-- page content -->
+<div class="right_col" role="main">
+
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>
+                    Formulario Venta <labe class="text-primary"><b>N° @Id_venta</b></labe>
+
+                </h3>
+            </div>
+
+
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="row">
+
+
+@using (Html.BeginForm("VentasEdit", "Dashboard", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal form-label-left" }))
+{
+
+    <input type="text" name="Id_ventas" value="@Id_venta" class="hidden" />
+
+            <div class="col-md-3 col-sm-4 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">
+                                    Estado Venta <span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+
+
+                                    @Html.DropDownList("Estado_venta", new SelectList(
+                                                        new List<Object>{
+                                                        new { value = "SELECCIONE" , text = "SELECCIONE"  },
+                                                        new { value = "INGRESADO" , text = "INGRESADO"  },
+                                                        new { value = "VERIFICANDO" , text = "VERIFICANDO"  },
+                                                        new { value = "COMPROBADO" , text = "COMPROBADO" },
+                                                        new { value = "CONCRETADO" , text = "CONCRETADO" },
+                                                        new { value = "ANULADO" , text = "ANULADO" },
+
+                                                        },
+                                                    "value", "text"), new { htmlAttributes = new { @class = "form-control" } })
+                                 
+                                </div>
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-4 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">
+                                    Estado despacho <span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+
+
+                                    @Html.DropDownList("Estado_despacho", new SelectList(
+                                                        new List<Object>{
+                                                        new { value = "SELECCIONE" , text = "SELECCIONE"  },
+                                                        new { value = "PENDIENTE" , text = "PENDIENTE" },
+                                                        new { value = "DESPACHADO" , text = "DESPACHADO" },
+                                                        new { value = "ENTREGADO" , text = "ENTREGADO" },
+                                                        },
+                                                    "value", "text"), new { htmlAttributes = new { @class = "form-control" } })
+
+                                </div>
+                            </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-4 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">
+                                Fecha envio <span class="required"></span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+
+                                <input type="date" name="Fecha_envio" />
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-4 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">
+                                Fecha entrega <span class="required"></span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+
+                                <input type="date" name="Fecha_entrega" />
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-sm-12 col-xs-12" align="center">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-3">
+                                @Html.ActionLink("Volver al listado", "VentasList", "Dashboard", new { }, new { @class = "btn btn-info" })
+                                <button type="submit" class="btn btn-success">Enviar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+}
+
+
+        </div>
+    </div>
+
+    <!-- footer content -->
+    <footer>
+        <div class="">
+            <p class="pull-right">
+                <a>RGL</a>
+            </p>
+        </div>
+        <div class="clearfix"></div>
+    </footer>
+    <!-- /footer content -->
+</div>
+<!-- /page content -->

@@ -1,0 +1,118 @@
+﻿@model Menajes_Maipu.Models.ModeloBD.Banco_menaje
+
+@{
+    var user = Session["user"];
+    var id = Session["id"];
+
+    Layout = "~/Views/Shared/_Ladmin.cshtml";
+}
+
+
+<!-- page content -->
+<div class="right_col" role="main">
+
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>
+                    Formulario Cuentas Bancarias
+                </h3>
+            </div>
+
+
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <a href="Index"><h2>Banco</h2> </a>  <h2><small>Ingresar</small></h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <h2><b>Información necesaria *</b></h2>
+                        @using (Html.BeginForm("BancoCreate", "Dashboard", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal form-label-left" }))
+                        {
+                          
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                                    Numero Cuenta <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @Html.EditorFor(model => model.Num_cuenta, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                    @Html.ValidationMessageFor(model => model.Num_cuenta, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                                    Nombre <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @Html.EditorFor(model => model.Nombre_cuenta, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                    @Html.ValidationMessageFor(model => model.Nombre_cuenta, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                                    Tipo <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @Html.DropDownListFor(model => model.Tipo_cuenta, new SelectList(
+                                                        new List<Object>{
+                                                        new { value = "Corriente" , text = "Cuenta Corriente"  },
+                                                        new { value = "Vista" , text = "Cuenta Vista" },
+                                                        },
+                                                       "value", "text"), new { htmlAttributes = new { @class = "form-control dropdown-menu pull-right" } })
+
+                                    @Html.ValidationMessageFor(model => model.Tipo_cuenta, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                                    Responsable <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @Html.EditorFor(model => model.Nombre_titular, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                    @Html.ValidationMessageFor(model => model.Nombre_titular, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="item form-group">  
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "hidden", required = "required", @Value="Activa"} })
+                                    @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                                <div class="ln_solid"></div>
+                                <div class="form-group">
+                                    <div class="col-md-6 col-md-offset-3">
+                                        <button type="submit" class="btn btn-success">Enviar</button>
+                                        @Html.ActionLink("Volver al listado", "BancoList", "Dashboard", new { }, new { @class = "btn btn-info" })
+
+                                    </div>
+                                </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer content -->
+    <footer>
+        <div class="">
+            <p class="pull-right">
+                <a>RGL</a>
+        </div>
+        <div class="clearfix"></div>
+    </footer>
+    <!-- /footer content -->
+
+</div>
+<!-- /page content -->
+

@@ -1,0 +1,142 @@
+﻿@model IEnumerable<Menajes_Maipu.Models.ModeloBD.Debito>
+@using PagedList.Mvc;
+@using PagedList;
+
+@{
+    var user = Session["user"];
+    var id = Session["id"];
+
+    Layout = "~/Views/Shared/_Ladmin.cshtml";
+
+}
+
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+
+        <div class="page-title">
+            <div class="title_left">
+                <h3>
+                    Listado de Pagos
+                </h3>
+            </div>
+
+        </div>
+        <div class="clearfix"></div>
+
+
+        <div class="row">
+
+            <div class="col-md-12 col-sm-12 col-xs-12" align="center">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content" align="center">
+                        <table class="table" align="center">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Venta
+                                    </th>
+                                    <th>
+                                        Usuario
+                                    </th>
+                                    <th>
+                                        Codigo Deposito
+                                    </th>
+                                    <th>
+                                        Fecha Deposito
+                                    </th>
+                                    <th>
+                                        Comprobante
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            @foreach (Menajes_Maipu.Models.ModeloBD.Debito item in ViewBag.Lista)
+                            {
+                                <tbody>
+
+                                    <tr>
+
+                                        <td>
+                                            <h4>     @Html.DisplayFor(modelItem => item.Id_ventas) </h4>
+                                        </td>
+                                        <td>
+                                            <h4>     @Html.DisplayFor(modelItem => item.Ventas.Usuario.Nombre_usuario) </h4>
+                                        </td>
+                                        <td>
+                                            <h4>     @Html.DisplayFor(modelItem => item.Cod_deposito) </h4>
+                                        </td>
+                                        <td>
+                                            <h4>   @Html.DisplayFor(modelItem => item.Fecha_deposito) </h4>
+                                        </td>
+                                        <td>
+
+                                            @if (item.Imagen != null)
+                                            {
+
+                                              
+                                                   
+                                                    <div class="image-gallery group" style="float:left;margin-right:20px">
+                                                        <figure tabindex="1">
+                                                            <img width="75" height="75" src="@Url.Action("GetImage", "Usuario", new { item.Id_ventas})" alt="jump, matey" />
+                                                        </figure>
+                                                        <a href="@Url.Action("GetImage", "Usuario", new { item.Id_ventas})" download="Comprobante Venta @item.Id_ventas Cliente @item.Ventas.Usuario.Nombre_usuario" class="btn btn-info">Descargar</a>
+
+                                                    </div>
+                                         
+                                    
+                                            }
+                                        </td>
+                                        <td>
+                                        </td>
+                                  
+                                    </tr>
+                                </tbody>
+                            }
+
+                        </table>
+
+
+
+
+
+                    </div>
+
+                </div>
+
+                <ul class="pagination">
+                    <li>
+                        @Html.PagedListPager((IPagedList)ViewBag.Lista, page => Url.Action("DebitoList", new { page }))
+                    </li>
+                </ul>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <!-- footer content -->
+    <footer>
+        <div class="">
+            <p class="pull-right">
+                <a>RGL</a>
+            </p>
+        </div>
+        <div class="clearfix"></div>
+    </footer>
+    <!-- /footer content -->
+
+</div>
+<!-- /page content -->

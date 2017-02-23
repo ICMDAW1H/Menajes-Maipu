@@ -1,0 +1,185 @@
+﻿@model Menajes_Maipu.Models.ModeloBD.Usuario
+
+@{
+    var user = Session["user"];
+    var id = Session["id"];
+    ViewBag.Title = "Comprar";
+}
+
+<!-- page content -->
+<div class="right_col" role="main">
+
+    <div class="container">
+       
+            <div class="row col-md-8 col-sm-8 col-xs-8 cart_info">
+
+    @using (Html.BeginForm("Comprar", "Home", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal form-label-left" }))
+    {
+        <input type="text" class="hidden" value="@ViewBag.Total" name="Total_venta" />
+                            @Html.EditorFor(model => model.id_user, new { htmlAttributes = new { style = "display:none", @Value = @id } })
+        foreach (var item in ViewBag.Usuario)
+        {
+            <h2 class="title text-center">Datos <strong> de la venta</strong></h2>
+            
+
+                            <table class="table table-responsive cart_info">
+                                <thead>
+                                    <tr style="background-color:#FE980F">
+                                        
+                                        <td align="center" colspan="4"><h4 style="color:white">Datos del usuario</h4></td>
+                                    </tr>
+                                    <tr class="active">
+                                        <td class="description"><p><b>Rut</b></p></td>
+                                        <td class="description"><p><b>Nombre</b></p></td>
+                                        <td class="description"><p><b>E-mail</b></p></td>
+                                        <td class="description"><p><b>Teléfono</b></p></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="active">
+                                        <td class="cart_description">
+                                            <label class="text-primary">@item.Rut</label>
+
+                                        </td>
+                                        <td class="cart_description">
+                                            <label class="text-primary">@item.Nombre_usuario @item.Apellido_usuario</label>
+
+                                        </td>
+
+                                        <td class="cart_description">
+                                            <label class="text-primary">@item.Email_usuario</label>
+
+                                        </td>
+
+                                        <td class="cart_description">
+                                            <label class="text-primary">@item.Telefono_usuario</label>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+        }
+
+                    if (ViewBag.Tipo == "Debito")
+                    {
+                    <input type="text" name="Tipo" value="Debito" class="hidden" />
+                    <input type="text" name="Debito" value="Debito" class="hidden" />
+
+                    <table class="table table-responsive cart_info">
+               
+                        <tr style="background-color:#FE980F">
+
+                            <td align="center" colspan="4"><h4 style="color:white">Datos de Envio</h4></td>
+                        <tr class="active">
+                            <td class="description"><p><b>Ciudad*</b></p></td>
+                            <td>@Html.Editor("Ciudad", new { htmlAttributes = new { @class = "form-control", @required = "required", @title = "Caracteres inválidos", @pattern = "[a-zA-Z ]+" } })</td>
+
+                        </tr>
+                        <tr class="active">
+                            <td class="description"><p><b>Calle*</b></p></td>
+                            <td>@Html.Editor("Calle", new { htmlAttributes = new { @class = "form-control", @required = "required", @title = "Caracteres inválidos", @pattern = "[a-zA-Z ]+" } })</td>
+
+                        </tr>
+                        <tr class="active">
+                            <td class="description"><p><b>Número*</b></p></td>
+                            <td>@Html.Editor("Numero", new { htmlAttributes = new { @class = "form-control", @required = "required", @type = "number", @pattern = "[0-9]", @title = "Ingrese solo números" } })</td>
+                        </tr>
+
+                        <tr class="active">
+                            <td class="description"><p><b>Comuna*</b></p></td>
+                            <td>@Html.Editor("Comuna", new { htmlAttributes = new { @class = "form-control", @required = "required", @title = "Caracteres inválidos", @pattern = "[a-zA-Z ]+" } })</td>
+                        </tr>
+                        <tr class="active">
+                            <td class="description"><p><b>Código postal*</b></p></td>
+                            <td>
+                                @Html.Editor("Cod_postal", new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                            </td>
+                        </tr>
+                        <tr class="active">
+                            <td class="description"><p><b>N° Departamento</b></p></td>
+                            <td>@Html.Editor("Num_departamento", new { htmlAttributes = new { @class = "form-control", @type = "number", @pattern = "[0-9]", @title = "Ingrese solo números" } })</td>
+                        </tr>
+                        <tr class="active">
+                            <td class="description"><p><b></b></p></td>
+                            <td><button type="submit" class="btn btn-primary"><b>Enviar</b></button></td>
+                        </tr>         
+            
+            </table>
+
+                 
+                    }
+                    if (ViewBag.Tipo == "IngresadoTienda")
+                    {
+                    if (ViewBag.Ingresado != null)
+                    {
+                    @ViewBag.Ingresado
+            }
+        }
+
+        if (ViewBag.Ingresado == null)
+        {
+            <table class="table table-responsive cart_info">
+                <thead>
+                    <tr style="background-color:#FE980F">
+
+                        <td align="center" colspan="4"><h4 style="color:white">Método de pago</h4></td>
+                    </tr>
+                    <tr class="active">
+                        <td class="description"><p><b>Seleccione método</b></p></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="active" align="center">
+                        <td class="cart_description" data-toggle="buttons">
+                            <label class="btn btn-success selected">@Html.RadioButton("Tipo", "Tienda")<b>Tienda</b></label>
+                            <label class="btn btn-success">@Html.RadioButton("Tipo", "Debito")<b>Debito</b></label>
+
+
+                        </td>
+
+
+                    </tr>
+                    <tr align="center">
+                        <td><button type="submit" class="btn btn-primary"><b>Enviar</b></button></td>
+                    </tr>
+                </tbody>
+
+            </table>
+   
+                    }
+                    }
+        </div>
+    <div class="row col-md-4 col-sm-4 col-xs-4" style="margin-left:30px;"><h2 class="title text-center">Politicas de <strong> Despacho</strong></h2>
+        <div class="">
+
+            <div class="left-sidebar">
+
+                <h3>
+
+                    <small>
+
+                        <p align="justify">
+                            El despacho se realizará solo cuando el estado de la venta cambie a "concretado", la empresa cuenta con un máximo de 5 días hábiles para despachar a destino.
+                        </p>
+
+                        <p align="justify">
+                           El envio se llevará a cabo por transportes Turbus-cargo, Menajes Maipú le entregará el número de seguimiento, este código puede ser ingresado en la página de<a href="https://www.turbus.cl/wtbus/indexCargoSeguimiento.jsf"> TURBUS-CARGO</a>.
+                        </p>
+
+                        <p align="justify">
+                            El monto final del articulo no incluye el flete, este será pagado por el cliente cuando el artículo llegue a su hogar. 
+                        </p>
+                        <img src="~/Content/Imagenes estaticas/turbus.png" width="350" height="120" class="img-circle"  />
+                    </small>
+
+                </h3>
+
+            </div>
+
+        </div>
+</div>
+
+     </div>
+      
+
+    </div>
+

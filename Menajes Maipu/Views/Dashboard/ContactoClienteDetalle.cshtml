@@ -1,0 +1,193 @@
+﻿@model Menajes_Maipu.Models.DAL.Administrador.UsuarioMotivo
+
+@{
+    var user = Session["user"];
+    var id = Session["id"];
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Ladmin.cshtml";
+}
+
+
+<!— page content —>
+<div class="right_col" role="main">
+
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>
+                    Mensajes de Clientes
+                </h3>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12" align="center">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Detalle del mensaje</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+
+
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+
+                        @using (Html.BeginForm("", "", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal form-label-left" }))
+                        {
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                                    Fecha <span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @foreach (var item in ViewBag.Contacto)
+                                    {
+
+                                   <input type="text" value="@item.Fecha" readonly class="form-control"/>
+                                          
+
+                                    }
+                                </div>
+                            </div>
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                                    Motivo <span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @foreach (var item in ViewBag.Contacto)
+                                    {
+
+                                        <input type="text" value="@item.Motivo_consulta" readonly class="form-control" />
+                                 
+
+                                    }
+                                </div>
+                            </div>
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">
+                                    Email <span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                              
+                                    
+                                    @foreach (var item in ViewBag.Usuario)
+                                    {
+
+                                  
+                                        <input type="text" value="@item.Email_usuario" readonly class="form-control" />
+
+                                    }
+
+                                 
+                                </div>
+                            </div>
+
+
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">
+                                    Mensaje <span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @foreach (var item in ViewBag.Contacto)
+                                    {
+                                        <textarea readonly class="form-control">@item.Mensaje
+                                        </textarea>
+
+                                    }
+
+
+                                </div>
+                            </div>
+
+                        }
+
+
+                        @using (Html.BeginForm("ContactoClienteDetalle", "Dashboard", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal form-label-left" }))
+                        {
+                            foreach (var item in ViewBag.Contacto)
+                            {
+                             
+                               
+                              <input type="text" class="hidden" name="Id_contacto" value=@item.Id_contacto>
+                                <input type="text" class="hidden" name="id_user" value=@item.id_user>
+
+                            }
+                      foreach (var item in ViewBag.Contacto)
+                      {
+                          if (item.Respuesta_consulta == "ESPERANDO RESPUESTA")
+                          {
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">
+                                    Respuesta <span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+
+
+
+                                    <textarea class="form-control" name="Respuesta"></textarea>
+
+                                </div>
+                            </div>
+                            <div class="form-actions no-color" align="Center">
+
+                                <input type="submit" value="Responder" class="btn btn-danger" />
+
+                                @Html.ActionLink("Volver al listado", "ContactoCliente", new { }, new { @class = "btn btn-info" })
+                            </div>
+                                }
+                                else
+                                {
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">
+                                            Respuesta <span class="required"></span>
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+
+
+                                            @foreach (var item2 in ViewBag.Contacto)
+                                            {
+                                                <textarea class="form-control" readonly>@item2.Respuesta_consulta</textarea>
+                                                
+                                            }
+
+                                            <div class="clearfix"></div>
+
+                                               
+                                            @Html.ActionLink("Volver al listado", "ContactoCliente", new { }, new { @class = "btn btn-info" })
+                                        </div>
+                                    </div>
+                                   
+                                }
+                            }
+
+
+
+
+
+
+                        }
+
+                            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!— footer content —>
+    <footer>
+        <div class="">
+            <p class="pull-right">
+                <a>RGL</a>
+            </p>
+        </div>
+        <div class="clearfix"></div>
+    </footer>
+    <!— /footer content —>
+
+</div>
+<!— /page content —>

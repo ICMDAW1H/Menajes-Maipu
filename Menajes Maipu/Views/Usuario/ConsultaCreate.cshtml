@@ -1,0 +1,72 @@
+﻿@model Menajes_Maipu.Models.ModeloBD.Mensaje_consulta
+@{
+    var id = Session["id"];
+    ViewBag.Title = "ConsultaCreate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--#contact-page-->
+<div id="contact-page" class="container">
+
+    <div class="bg">
+
+
+        <div class="row">
+
+            <div class="col-sm-12">
+
+                <div class="contact-form">
+
+                    <h2 class="title text-center">Envianos tus dudas</h2>
+                    <p>Si tienes alguna duda o consulta porfavor ingresala a continuacion.</p>
+
+                    <div class="status alert alert-success" style="display: none"></div>
+
+                   @using (Html.BeginForm("ConsultaCreate", "Usuario", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal form-label-left" }))
+                   {
+
+                        @Html.AntiForgeryToken()
+
+                    @Html.EditorFor(model => model.id_user, new { htmlAttributes = new { @class = "form-control", style = "display:none", @Value = @id } })
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Seleccione Motivo: <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            @Html.DropDownListFor(model => model.Motivo_consulta, new SelectList(
+                                                        new List<Object>{
+                                                        new { value = "Cotizacion" , text = "Cotizacion"  },
+                                                        new { value = "Sugerencias" , text = "Sugerencias" },
+                                                        new { value = "Reclamo" , text = "Reclamo" },
+                                                        new { value = "Otros" , text = "Otros" },
+                                                        },
+                                                    "value", "text"), new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+
+                        <div class="item form-group">
+                            <div class="col-md-12">
+                                <input type="text" name="Mensaje" id="Mensaje" required class="form-control" style="height:330px" placeholder="Escribe tu mensaje aquí" pattern="[a-zA-Z0-9 ]+"  title = "Caracteres inválidos">
+                       
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group col-md-12" align="center">
+                            <button type="submit" class="btn btn-success">Enviar</button>
+                            @Html.ActionLink("Volver al listado", "BuzonEntrada", "Usuario", new { id=@id}, new { @class = "btn btn-info" })
+                        </div>
+
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!--/#contact-page-->

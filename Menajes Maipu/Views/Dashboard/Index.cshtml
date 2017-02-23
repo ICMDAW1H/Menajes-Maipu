@@ -1,0 +1,208 @@
+﻿@{
+    var user = Session["user"];
+    var id = Session["id"];
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Ladmin.cshtml";
+}
+
+<!-- page content -->
+<div class="right_col" role="main">
+    <!-- top tiles -->
+    <div class="row tile_count">
+       
+        <div class="animated flipInY col-md-2 col-sm-4 col-xs-4 tile_stats_count">
+            <div class="left"></div>
+            <div class="right">
+                <span class="count_top"><i class="fa fa-glass"></i>Categorias</span>
+                <div class="count">@ViewBag.contarcat</div>
+                <span class="count_bottom"><i class="green">4% </i> From last Week</span>
+            </div>
+        </div>
+
+        <div class="animated flipInY col-md-2 col-sm-4 col-xs-4 tile_stats_count">
+            <div class="left"></div>
+            <div class="right">
+                <span class="count_top"><i class="fa fa-glass"></i>Subcategorias</span>
+                <div class="count">@ViewBag.contarscat</div>
+                <span class="count_bottom"><i class="green">4% </i> From last Week</span>
+            </div>
+        </div>
+
+        <div class="animated flipInY col-md-2 col-sm-2 col-xs-4 tile_stats_count">
+            <div class="left"></div>
+            <div class="right">
+                <span class="count_top"><i class="fa fa-glass"></i> Total Productos</span>
+                <div class="count">@ViewBag.contarpro
+                </div>
+                <span class="count_bottom"><i class="green">4% </i> From last Week</span>                
+            </div>
+        </div>
+
+        <div class="animated flipInY col-md-2 col-sm-8 col-xs-4 tile_stats_count">
+            <div class="left"></div>
+            <div class="right">
+                <span class="count_top"><i class="fa fa-user"></i>Usuarios</span>
+                <div class="count">@ViewBag.contaruser</div>
+                <span class="count_bottom"><i class="green">4% </i> From last Week</span>
+            </div>
+        </div>
+
+        <div class="animated flipInY col-md-1 col-sm-2 col-xs-2 tile_stats_count">
+            <div class="left"></div>
+            <div class="right">
+                <span class="count_top"><i class="fa fa-user"></i>Ventas</span>
+                <div class="count">@ViewBag.contarven</div>
+            </div> 
+        </div>
+
+        <div class="animated flipInY col-md-1 col-sm-2 col-xs-2 tile_stats_count">
+           
+
+            <div class="right">
+                <span class="count_top"><label class="label label-success">Concretadas</label></span>
+                <div class="count">@ViewBag.contarvenc</div>
+            </div>
+        </div>
+
+        <div class="animated flipInY col-md-2 col-sm-2 col-xs-2 tile_stats_count">
+       
+
+            <div class="right">
+                <span class="count_top"><label class="label label-danger">Anuladas</label></span>
+                <div class="count">@ViewBag.contarvena</div>
+                <div class="left"></div>
+            </div>
+          
+        </div>
+
+    </div>
+
+
+
+    <br /><br />
+
+
+   
+    <!-- /top tiles -->
+
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Productos 
+                    <small>
+                      
+                            @Ajax.ActionLink("(10)Mas caros", "P10MAS", new AjaxOptions
+                       {
+                           HttpMethod = "GET",
+                           UpdateTargetId = "Producto",
+                           InsertionMode = InsertionMode.Replace
+                       })
+                        
+                            <span style="color:blue">|</span>
+                            @Ajax.ActionLink("(10)Mas Stock", "P10MASTOCK", new AjaxOptions
+                       {
+                           HttpMethod = "GET",
+                           UpdateTargetId = "Producto",
+                           InsertionMode = InsertionMode.Replace
+                       })
+                        <span style="color:blue">|</span>
+                        @Ajax.ActionLink("(10)Menos Stock", "P10MENOSTOCK", new AjaxOptions
+                       {
+                           HttpMethod = "GET",
+                           UpdateTargetId = "Producto",
+                           InsertionMode = InsertionMode.Replace
+                       })
+                       
+                            <span style="color:blue">|</span>
+                            @Ajax.ActionLink("(10)Mas baratos", "P10MENOS", new AjaxOptions
+                       {
+                           HttpMethod = "GET",
+                           UpdateTargetId = "Producto",
+                           InsertionMode = InsertionMode.Replace
+                       })
+
+                       
+
+                        
+
+                    </small>
+                    </h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                       
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+             
+                <div class="x_content">
+                    <div id="Producto"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>
+                        Usuarios
+                        <small>
+
+                            @Ajax.ActionLink("Listado Trabajadores", "TRABALL", new AjaxOptions
+                       {
+                           HttpMethod = "GET",
+                           UpdateTargetId = "Usuarios",
+                           InsertionMode = InsertionMode.Replace
+                       })
+                            <span style="color:blue">|</span>
+                            @Ajax.ActionLink("Listado Clientes", "CLIALL", new AjaxOptions
+                       {
+                           HttpMethod = "GET",
+                           UpdateTargetId = "Usuarios",
+                           InsertionMode = InsertionMode.Replace
+                       })
+
+
+
+
+
+                        </small>
+                    </h2>
+                    <ul class="nav navbar-right panel_toolbox">
+
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+
+                <div class="x_content">
+                    <div id="Usuarios"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+        <br />
+      
+
+    <!-- footer content -->
+    <footer>
+            <div class="">
+                <p class="pull-right">
+                     <a>RGL</a> 
+                   
+                </p>
+            </div>
+            <div class="clearfix"></div>
+     </footer>
+    <!-- /footer content -->
+</div>
+<!-- /page content -->

@@ -1,0 +1,149 @@
+﻿
+
+@model IEnumerable<Menajes_Maipu.Models.ModeloBD.Debito>
+
+@if (ViewBag.Estado != null)
+{
+<h2> @ViewBag.Estado</h2>
+}
+else
+{
+
+
+<div class="table-condensed table-responsive cart_info col-sm-12">
+    <h2 class="title text-center">Datos <strong> del Deposito</strong></h2>
+    @foreach (var item in Model)
+    {
+        if (item.Num_cuenta == null && item.Fecha_deposito == null && item.Cod_deposito == null)
+        {
+
+            using (Html.BeginForm("DebitoDetalle", "Usuario", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal form-label-left" }))
+            {
+                <table class="table">
+                    <tr>
+                        <td class="description"><p><b>Código Deposito*</b></p></td>
+                        <td>
+                            <input type="text" name="Id_ventas" value="@item.Id_ventas" class="hidden" />
+                            <input type="number" name="Cod_deposito" class="form-control" pattern = "[0-9]" title = "Ingrese solo números" required />
+                        </td>
+                    </tr>
+                    <tr>
+                  
+                        <td class="description">
+                            <p><b>Número Cuenta*</b></p>
+                        </td>
+                        <td>
+                            <input type="number" name="Num_cuenta" class="form-control" pattern ="[0-9-]" title ="Ingrese solo números" required/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="description">
+                            <p><b>Fecha Deposito*</b></p>
+                        </td>
+                        <td>
+                            <input type="date" name="Fecha_deposito" class="form-control" required />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="description">
+                            <p><b>Comprobante Deposito*</b></p>
+                        </td>
+                        <td>
+                            <input type="file" name="Imagen"  class="btn btn-default" required="required" />
+                        </td>
+                    </tr>
+                </table>
+                <div align="center">
+                    <input type="submit" value="Actualizar Deposito" class="btn btn-success"/>
+                </div>
+              
+            }
+        }
+        else
+        {
+           
+
+                <table class="table">
+                    <tr>
+                        <td class="description"><p><b>Código Deposito</b></p></td>
+
+                        <td class="cart_description">
+                            <p> @item.Cod_deposito</p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="description"><p><b>Número de cuenta</b></p></td>
+
+                        <td class="cart_description">
+                            <p> @item.Num_cuenta</p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="description"><p><b>Fecha Deposito</b></p></td>
+
+                        <td class="cart_description">
+                            <p> @item.Fecha_deposito</p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="description"><p><b>N° venta</b></p></td>
+
+                        <td class="cart_description">
+                            <p> @item.Id_ventas</p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="description"><p><b>Comprobante</b></p></td>
+
+                        <td class="cart_description">
+                            @if (item.Imagen != null)
+                            {
+                                <style>                           
+                                    .image:hover{
+                                        width:250px;
+                                        height:250px;
+                                                }
+                                    
+                                </style>
+                          
+                                    <img  class="image" width="120" height="120" src="@Url.Action("GetImage", "Usuario", new { item.Id_ventas})" />
+                     
+
+                            }
+                        </td>
+                    </tr>
+
+                 
+
+
+
+                    <tr>
+                        <td class="description" colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td class="description" colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td class="description" colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td class="description" colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td class="description" colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td class="description" colspan="2"></td>
+                    </tr>
+
+                </table>
+
+                }
+                }
+      </div>
+
+}

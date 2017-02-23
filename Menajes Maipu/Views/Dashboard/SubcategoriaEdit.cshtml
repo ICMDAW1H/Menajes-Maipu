@@ -1,0 +1,89 @@
+﻿@model Menajes_Maipu.Models.ModeloBD.Subcategoria
+
+@{
+    var user = Session["user"];
+    var id = Session["id"];
+
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Ladmin.cshtml";
+}
+
+<!-- page content -->
+<div class="right_col" role="main">
+
+        <div class="">
+            <div class="page-title">
+                <div class="title_left">
+                    <h3>
+                        Formulario Subcategorias
+                    </h3>
+                </div>
+
+
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Subcategoria</h2>  <h2><small>Editar</small></h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            @using (Html.BeginForm("SubcategoriaEdit", "Dashboard", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal form-label-left" }))
+                            {
+                                @Html.HiddenFor(model => model.Id_subcategoria)
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">
+                                        Nombre <span class="required"></span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        @foreach (var item in ViewBag.nombre)
+                                        {
+
+                                            @Html.EditorFor(model => model.Nombre_subcategoria, new { htmlAttributes = new { @class = "form-control", @Value = @item.Nombre_subcategoria, required = "required", placeholder = "Vasos y Copas", @pattern = "[a-zA-Z ]+", @title = "Caracteres inválidos" } })
+                                            @Html.ValidationMessageFor(model => model.Nombre_subcategoria, "", new { @class = "text-danger" })
+                                        }
+                                    </div>
+                                </div>
+                                <div class="item form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="website">
+                                        Nombre Categoria <span class="required"></span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        @Html.DropDownList("Id_categoria", new SelectList(ViewBag.Todo, "Id_categoria", "Nombre_categoria"))
+                                    </div>
+                                </div>
+
+                                <div class="ln_solid"></div>
+                                <div class="form-group">
+                                    <div class="col-md-6 col-md-offset-3">
+
+                                        <button type="submit" class="btn btn-success">Enviar</button>
+                                        @Html.ActionLink("Volver al listado", "SubcategoriaList", "Dashboard", new { }, new { @class = "btn btn-info" })
+
+
+                                    </div>
+                                </div>
+
+
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- footer content -->
+        <footer>
+            <div class="">
+                <p class="pull-right">
+                    <a>RGL</a>
+                </p>
+            </div>
+            <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+    </div>
+<!-- /page content -->

@@ -1,0 +1,205 @@
+﻿@using Menajes_Maipu.Models.ModeloBD;
+@model Menajes_Maipu.Models.ModeloBD.Contacto
+@using CaptchaMvc.HtmlHelpers;
+
+@{
+    MenajesbdEntities6 ctx = new MenajesbdEntities6();
+
+    ViewBag.Title = "DetalleProducto";
+}
+
+<section>
+    <div class="container">
+        @if (ViewBag.Estado == "Captcha válido")
+        {
+            <div class="alert alert-success alert-dismissable" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Felicitaciones</strong> Su consulta ha sido ingresada con exito.
+            </div>
+        }
+        @if (ViewBag.Estado == "Captcha Inválido")
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Consulta mal ingresada</strong> Revise nuevamente los campos que ha ingresado.
+            </div>
+        }
+
+        <div class="row">
+            <div class="col-sm-3">
+
+                <div class="left-sidebar">
+
+                    <h2>Categorias</h2>
+
+                    <div class="panel-group category-products" id="accordian">
+                        <!--category-productsr-->
+                        @foreach (var categoria in ViewBag.Categoria)
+                        {
+
+                            <div class="panel panel-default">
+
+                                <div class="panel-heading">
+
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordian" href="#@categoria.Id_categoria">
+                                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                            @categoria.Nombre_categoria
+                                        </a>
+
+                                    </h4>
+
+                                </div>
+
+                                <div id="@categoria.Id_categoria" class="panel-collapse collapse">
+
+                                    <div class="panel-body">
+
+                                        <ul>
+
+                                            @foreach (var subcategoria in ViewBag.Subcategoria)
+                                            {
+                                                if (categoria.Id_categoria == subcategoria.Id_categoria)
+                                                {
+                                                    int id = subcategoria.Id_subcategoria;
+                                                    int cantidad = ctx.Producto.Where(c => c.Id_subcategoria == id).Count();
+
+                                                    <li><a href=@Url.Action("Getsubcategoria", "Home" , new { Id_subcategoria=@subcategoria.Id_subcategoria })>@subcategoria.Nombre_subcategoria </a>(@cantidad)</li>
+                                                }
+                                            }
+
+
+                                        </ul>
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+                        }
+
+                    </div><!--/category-products-->
+
+                </div>
+
+            </div>
+
+            <div class="col-sm-9 padding-right">
+                @foreach (Producto producto in ViewBag.Productos)
+                {
+                <div class="product-details">
+                    <!--product-details-->
+                   
+                    <div class="col-sm-5">
+
+                        @if (producto.Imagen_producto != null)
+                        {
+                            <div style="margin-left:5px;margin-right:5px;margin-top:5px;margin-bottom:5px;">
+                                <img width="225" height="300" src="@Url.Action("GetImage", "Home", new { producto.Id_producto })" />
+                            </div>
+                        }
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="product-information">
+                            <!--/product-information-->
+                            <h2>@producto.Nombre_producto</h2>
+                            <p>ID: @producto.Id_producto</p>
+                            <span>
+                                <span>Precio $@producto.Precio_producto</span>
+                        
+                                <a href=@Url.Action("Cart", "Home", new { id = producto.Id_producto}) class="btn btn-fefault cart"><i class="fa fa-shopping-cart"></i>Añadir al carro</a>
+
+                            </span>
+                        @if (producto.Stock_producto >= 3)
+                        {
+                            <p><b>Disponibilidad: </b><label class="text-success"> En Stock</label></p>
+                        }
+                        else
+                        {
+                            <p><b>Disponibilidad:</b> Agotado</p>
+
+                        }
+                        </div><!--/product-information-->
+                    </div>
+                    
+                </div><!--/product-details-->
+
+                    <div class="category-tab shop-details-tab">
+                        <!--category-tab-->
+                        <div class="col-sm-12">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#details" data-toggle="tab">Detalles</a></li>
+                                <li><a href="#reviews" data-toggle="tab">Preguntanos</a></li>
+                            </ul>
+                        </div>
+                        <div class="tab-content">
+
+                            <div class="tab-pane fade active in" id="details">
+                                <div class="col-sm-12">
+                                    <p>@producto.Descripcion_producto</p>
+                                    
+                                </div>
+
+                            </div>
+
+             
+
+
+                            <div class="tab-pane fade" id="reviews">
+                                <div class="col-sm-12">
+                                    <p>Esta consulta es para el producto <label class="text-danger">@producto.Nombre_producto</label>, en caso contrario ingresa a la seccion contacto</p>
+                                    <p><b>Escribe aqui tu consulta</b></p>
+
+                                    @using (Html.BeginForm("ProductoContact", "Home", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal form-label-left" }))
+                                    {
+                                        <span>
+                                            <input type="text" name="Id_item" value="@producto.Id_producto" class="hidden">
+                                            <input type="text" name="Nombre_item" value="@producto.Nombre_producto" class="hidden">
+
+                                            @Html.EditorFor(model => model.Nombre_contacto, new { htmlAttributes = new { @class = "form-control", @placeholder = "Escriba su nombre...", @id = "Nombre_contacto", @pattern = "[a-zA-Z0-9 ]+", @title = "Caracteres inválidos", @required = "required" } })
+                                            @Html.ValidationMessageFor(model => model.Nombre_contacto, null, new { @class = "text-danger" })
+                                            <br />
+                                            @Html.EditorFor(model => model.Email_contacto, new { htmlAttributes = new { @class = "form-control", @placeholder = "Escriba su correo electrónico...", @id = "Email_contacto", @type = "email", @title = "Caracteres inválidos", @required = "required" } })
+                                            @Html.ValidationMessageFor(model => model.Email_contacto, null, new { @class = "text-danger" })
+
+                                        </span>
+
+                                        @Html.EditorFor(model => model.Asunto_contacto, new { htmlAttributes = new { @class = "hidden",@Value="pepito", @placeholder = "Escriba su motivo...", @id = "Asunto_contacto", @pattern = "[a-zA-Z0-9 ]+", @title = "Caracteres inválidos", @required = "required" } })
+                                        <br />
+                                        @Html.EditorFor(model => model.Mensaje_contacto, new { htmlAttributes = new { @class = "form-control", @placeholder = "Escriba su mensaje...", @id = "Mensaje_contacto", @pattern = "[a-zA-Z0-9 ]+", @title = "Caracteres inválidos", @required = "required" } })
+                                        @Html.ValidationMessageFor(model => model.Mensaje_contacto, null, new { @class = "text-danger" })
+                                        
+
+                                        @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-control hidden", @value = "1", @id = "Estado", @pattern = "[a-zA-Z0-9 ]+", @title = "Caracteres inválidos" } })
+
+
+                                        <div class="editor-field">
+                                            @Html.Captcha(5)
+
+                                            @if (ViewBag.Estado == "Captcha Inválido")
+                                            {
+                                                <label class="text text-danger">@ViewBag.Estado </label>
+                                            }
+
+
+                                        </div>
+
+                                        <button type="submit" class="btn btn-default pull-right">
+                                            Enviar
+                                        </button>
+                                    }
+                                 </div>
+                            </div>
+
+                        </div>
+                    </div><!--/category-tab-->
+
+
+                }
+
+            </div>
+        </div>
+    </div>
+</section>

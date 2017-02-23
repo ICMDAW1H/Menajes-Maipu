@@ -1,0 +1,139 @@
+﻿@model IEnumerable<Menajes_Maipu.Models.ModeloBD.Banco_menaje>
+
+
+@{
+    var user = Session["user"];
+    var id = Session["id"];
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Ladmin.cshtml";
+}
+
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+
+        <div class="page-title">
+            <div class="title_left">
+                <h3>
+                    Listado de Cuentas
+                  
+                </h3>
+            </div>
+
+        </div>
+        <div class="clearfix"></div>
+
+
+        <div class="row">
+
+            <div class="col-md-12 col-sm-12 col-xs-12" align="left">
+                <div class="x_panel">
+                    <div class="x_title">
+                     
+                            @if (ViewBag.Cuenta != 0)
+                            {
+                                <a href=@Url.Action("BancoCreate", "Dashboard") class="btn btn-default disabled"> Ingresar Cuenta</a>
+                                <label>Debe eliminar la cuenta activa</label>
+                            }
+                            else
+                            {
+                                <a href=@Url.Action("BancoCreate", "Dashboard") class="btn btn-success"> Ingresar Cuenta</a>
+                            }
+                        
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                         
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content" align="center">
+                        <table class="table" align="center">
+                            <thead>
+                                <tr>
+
+                                    <th>
+                                        Número de cuenta
+                                    </th>
+                                    <th>
+                                        Nombre
+                                    </th>
+                                    <th>
+                                        Tipo
+                                    </th>
+                                    <th>
+                                        Responsable
+                                    </th>
+                                    <th>
+                                        Estado
+                                    </th>
+
+                                </tr>
+                            </thead>
+
+                            @foreach (Menajes_Maipu.Models.ModeloBD.Banco_menaje item in ViewBag.BancosListar)
+                            {
+
+                                <tbody>
+
+                                    <tr>
+                                 
+
+                                            <td>
+                                                <h4><b>  @Html.DisplayFor(modelItem => item.Num_cuenta)</b>    </h4>
+                                            </td>
+                                            <td>
+                                                <h4><b>  @Html.DisplayFor(modelItem => item.Nombre_cuenta)</b>     </h4>
+                                            </td>
+                                            <td>
+                                                <h4><b>  @Html.DisplayFor(modelItem => item.Tipo_cuenta)</b>    </h4>
+                                            </td>
+                                            <td>
+                                                <h4><b>  @Html.DisplayFor(modelItem => item.Nombre_titular)</b>    </h4>
+                                            </td>
+                                            <td>
+                                                <h4><b>  @Html.DisplayFor(modelItem => item.Estado)</b>    </h4>
+                                            </td>
+                                        
+                                       
+
+
+
+
+                                        <td>
+                                            <a href=@Url.Action("BancoDelete", new {id = item.Num_cuenta }) class="btn btn-default "><i class="fa fa-trash-o"></i></a>
+
+                                        </td>
+
+
+
+
+                                    </tr>
+                                </tbody>
+                            }
+
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- footer content -->
+    <footer>
+        <div class="">
+            <p class="pull-right">
+                <a>RGL</a>
+            </p>
+        </div>
+        <div class="clearfix"></div>
+    </footer>
+    <!-- /footer content -->
+
+</div>
+<!-- /page content -->

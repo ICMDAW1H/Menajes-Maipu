@@ -1,0 +1,160 @@
+﻿@model IEnumerable<Menajes_Maipu.Models.ModeloBD.Ventas>
+@using PagedList.Mvc;
+@using PagedList;
+
+@{
+    var user = Session["user"];
+    var id = Session["id"];
+
+    Layout = "~/Views/Shared/_Ladmin.cshtml";
+
+}
+
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+
+        <div class="page-title">
+            <div class="title_left">
+                <h3>
+                    Listado de Ventas
+
+                </h3>
+            </div>
+
+        </div>
+        <div class="clearfix"></div>
+
+
+        <div class="row">
+
+            <div class="col-md-12 col-sm-12 col-xs-12" align="center">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content" align="center">
+                        <table class="table" align="center">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Numero Venta
+                                    </th>
+                                    <th>
+                                        Estado Venta
+                                    </th>
+                                    <th>
+                                        Cliente
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+
+
+
+                            @foreach (Menajes_Maipu.Models.ModeloBD.Ventas item in ViewBag.Lista)
+                            {
+                                <tbody>
+
+                                    <tr>
+
+                                        <td>
+                                            <h4>     @Html.DisplayFor(modelItem => item.Id_ventas) </h4>
+                                        </td>
+
+                                        @if (item.Estado == "INGRESADO")
+                                        {
+                                            <td>
+                                                <h4><label class="label label-default">@Html.DisplayFor(modelItem => item.Estado)</label></h4>
+                                            </td>
+                                            @*<input class="label label-default"/>*@
+                                        }
+                                        else if (item.Estado == "VERIFICANDO")
+                                        {
+                                            <td>
+                                                <h4><label class="label label-warning">@Html.DisplayFor(modelItem => item.Estado)</label></h4>
+                                            </td>
+                                        }
+                                        else if (item.Estado == "COMPROBADO")
+                                        {
+                                            <td>
+                                                <h4><label class="label label-primary">@Html.DisplayFor(modelItem => item.Estado)</label> </h4>
+                                            </td>
+                                        }
+                                        else if (item.Estado == "ANULADO")
+                                        {
+                                            <td>
+                                                <h4><label class="label label-danger">@Html.DisplayFor(modelItem => item.Estado)</label> </h4>
+                                            </td>
+                                        }
+
+                                        else
+                                        {
+                                            <td>
+                                                <h4><label class="label label-success">@Html.DisplayFor(modelItem => item.Estado)</label></h4>
+                                            </td>
+                                        }
+
+
+
+                                        <td>
+                                            <h4>     @Html.DisplayFor(modelItem => item.Usuario.Nombre_usuario) </h4>
+                                        </td>
+
+                                        <td>
+                                            <a href=@Url.Action("VentasEdit", new {id = item.Id_ventas }) class="btn btn-default "><i class="fa fa-pencil"></i></a>
+                                          </td>
+                                    </tr>
+                                </tbody>
+                            }
+
+                        </table>
+
+
+
+
+
+                    </div>
+
+                </div>
+
+                <ul class="pagination">
+                    <li>
+                        @Html.PagedListPager((IPagedList)ViewBag.Lista, page => Url.Action("VentasList", new { page }))
+                    </li>
+                </ul>
+
+            </div>
+
+
+
+
+
+
+
+        </div>
+
+    </div>
+
+    <!-- footer content -->
+    <footer>
+        <div class="">
+            <p class="pull-right">
+                <a>RGL</a>
+            </p>
+        </div>
+        <div class="clearfix"></div>
+    </footer>
+    <!-- /footer content -->
+
+</div>
+<!-- /page content -->
+
+

@@ -1,0 +1,194 @@
+﻿@model Menajes_Maipu.Models.ModeloBD.Usuario
+
+@{
+    var user = Session["user"];
+    var id = Session["id"];
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Ladmin.cshtml";
+}
+
+<!-- page content -->
+<div class="right_col" role="main">
+
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>
+                    Perfil Usuario
+                </h3>
+            </div>
+
+
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+
+                        @foreach (var item in ViewBag.Usuario)
+                        {
+                            <h2>Informacion Personal <small>@item.Email_usuario</small></h2>
+                        }
+                        <div class="clearfix"></div>
+
+                    </div>
+                    <div class="x_content">
+
+
+                        @using (Html.BeginForm("EditPerfil", "Dashboard", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal form-label-left" }))
+                        {
+                            <div class="item form-group">
+                              
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+
+                                    @Html.EditorFor(model => model.id_user, new { htmlAttributes = new { @class = "form-control",style = "display:none", @Value = @id } })
+
+                                </div>
+
+                            </div>
+
+
+                            foreach (var item in ViewBag.Usuario)
+                            {
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">
+                                    Rut<span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+
+                                    @Html.EditorFor(model => model.Rut, new { htmlAttributes = new { @class = "form-control", @Value = @item.Rut } })
+
+                                </div>
+
+                            </div>
+
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">
+                                    Nombre<span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+
+                                    @Html.EditorFor(model => model.Nombre_usuario, new { htmlAttributes = new { @class = "form-control", @Value = @item.Nombre_usuario } })
+
+                                </div>
+
+                            </div>
+
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">
+                                    Apellido<span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+
+                                    @Html.EditorFor(model => model.Apellido_usuario, new { htmlAttributes = new { @class = "form-control", @Value = @item.Apellido_usuario } })
+
+                                </div>
+
+                            </div>
+
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">
+                                    Apellido<span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+
+                                    @Html.EditorFor(model => model.Email_usuario, new { htmlAttributes = new { @class = "form-control", @Value = @item.Email_usuario } })
+
+                                </div>
+
+                            </div>
+
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">
+                                    Telefono<span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+
+                                    @Html.EditorFor(model => model.Telefono_usuario, new { htmlAttributes = new { @class = "form-control", @Value = @item.Telefono_usuario } })
+
+                                </div>
+
+                            </div>
+
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">
+                                    Contraseña<span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+
+                                    @Html.EditorFor(model => model.Contrasena, new { htmlAttributes = new { @class = "form-control", @Value = @item.Contrasena } })
+
+                                </div>
+
+                            </div>
+
+
+                            }
+
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">
+                                    Sexo<span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+
+                                      @Html.DropDownListFor(model => model.Sexo, new SelectList(
+                                                        new List<Object>{
+                                                        new { value = "Femenino" , text = "Femenino"  },
+                                                        new { value = "Masculino" , text = "Masculino" },
+                                                        },
+                                                    "value", "text"), new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+
+                            </div>
+
+
+
+
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">
+                                    Tipo <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @Html.DropDownList("Tipo", new SelectList(ViewBag.Todorol, "Id_rol", "Nombre"), new { htmlAttributes = new { @class = "form-control", @Value = @ViewBag.Rol, @readonly = "readonly" } })
+
+                                
+                                </div>
+
+                            </div>
+                            
+
+
+                            <div class="ln_solid"></div>
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-3">
+
+                                    <button type="submit" class="btn btn-success">Enviar</button>
+                                </div>
+                            </div>
+
+
+                        }
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer content -->
+    <footer>
+        <div class="">
+            <p class="pull-right">
+                <a>RGL</a>
+            </p>
+        </div>
+        <div class="clearfix"></div>
+    </footer>
+    <!-- /footer content -->
+
+</div>
+<!-- /page content -->

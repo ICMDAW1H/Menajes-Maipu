@@ -1,0 +1,158 @@
+﻿@using Menajes_Maipu.Models.ModeloBD;
+@using Menajes_Maipu.Controllers;
+@{
+    MenajesbdEntities6 ctx = new MenajesbdEntities6();
+    ViewBag.Title = "Cart";
+    var user = Session["user"];
+    var id = Session["id"];
+    decimal s = 0;
+    var iva = 0.19;
+    var neto = 1.19;
+    double precioneto = 0;
+
+
+
+}
+
+<section id="cart_items">
+    <div class="container">
+   
+        <div class="row">
+          
+        
+            <div class="table-responsive cart_info col-sm-8">
+                <h2 class="title text-center">Carro <strong> de compras</strong></h2>
+                <table class="table table-condensed">
+                    <thead>
+                        <tr class="cart_menu">
+                            <td class="image">Producto</td>
+                            <td class="description"></td>
+                            <td class="price">Precio</td>
+                            <td class="quantity">Cantidad</td>
+                            <td class="total">Sub Total</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       
+                 
+                        @if (Session["cart"] != null)
+                        {
+                            foreach (var item in (List<Item>)Session["cart"])
+                            {
+
+                                if (item.Quantity > 0)
+                                {
+
+                                    s = s + (item.p.Precio_producto.Value * item.Quantity) ;
+                                    precioneto = Convert.ToDouble(s) / neto;
+                        <tr>
+                            <td class="cart_product">
+                                @if (item.p.Imagen_producto != null)
+                                {
+                            <div style="margin-left:2px;margin-right:2px;margin-top:2px;margin-bottom:2px;">
+                                <img width="40" height="60" src="@Url.Action("GetImage", "Home", new { item.p.Id_producto })" />
+                            </div>
+                                }
+                            </td>
+                            <td class="cart_description">
+                                <h4><a href=""><p>@item.p.Nombre_producto</p></a></h4>
+                                <p>ID: @item.p.Id_producto</p>
+                            </td>
+                            <td class="cart_price">
+                                <p>$ @item.p.Precio_producto</p>
+                      
+                            </td>
+                            <td class="cart_quantity">
+                                <div class="cart_quantity_button">
+                               
+                                    <a class="cart_quantity_up" href=@Url.Action("Cart", "Home", new { id = @item.p.Id_producto })> + </a>
+                                    <input class="cart_quantity_input" type="text" name="quantity" value=@item.Quantity autocomplete="off" size="2" readonly>
+                                    <a class="cart_quantity_down" href=@Url.Action("Remove", "Home", new { id = @item.p.Id_producto })> - </a>
+                                </div>
+                            </td>
+                            <td class="cart_total">
+                                <p class="cart_total_price">$ @(item.p.Precio_producto * item.Quantity)</p>
+                            </td>
+                            <td class="cart_delete">
+                                <a class="cart_quantity_delete" href=@Url.Action("Borrar", "Home", new { id = item.p.Id_producto })><i class="fa fa-times"></i></a>
+                            </td>
+
+
+
+                        </tr>
+                                    }
+
+                                } }
+                            else
+                            {
+                        <tr><td> No existen productos</td></tr>
+                        }
+                       
+                       
+                    </tbody>
+
+                </table>
+            </div>
+
+            <div class="col-sm-4">
+                <h2 class="title text-center">Detalle <strong> de venta</strong></h2>
+                <div class="total_area">
+                    <ul>
+                        @if (s != 0 && id == null)
+                        {
+
+                            <li><b>Neto Total</b> <span>$ @Convert.ToInt32(precioneto)</span></li>
+                            var civa = Convert.ToInt32(precioneto) * iva;
+                            <li><b>Iva</b><span>$ @Convert.ToInt32(civa)</span></li>
+                            var total = s;
+
+                            <li><b>Total</b><span>$ @Convert.ToInt32(total)</span></li>
+                            <a class="btn btn-default check_out disabled" href="#">Cotizar</a>
+
+                        }
+
+
+                        @if (s != 0 && id != null)
+                        {
+                            <li><b>Neto Total</b> <span>$ @Convert.ToInt32(precioneto)</span></li>
+                            var civa = Convert.ToInt32(precioneto) * iva;
+                            <li><b>Iva</b><span>$ @Convert.ToInt32(civa)</span></li>
+                            var total = s;
+
+                            <li><b>Total</b><span>$ @Convert.ToInt32(total)</span></li>
+                            <a href=@Url.Action("Index", "Home") class="btn btn-default update">Volver</a>
+                            <a class="btn btn-default check_out" href=@Url.Action("Cotizar", new { id = @id, total = total})>Cotizar</a>
+                            <a class="btn btn-default check_out" href=@Url.Action("Comprar", new { id = @id, total = total})>Comprar</a>
+
+                        }
+                        else
+                        {
+                           
+                            <a href=@Url.Action("Index", "Home") class="btn btn-default update">Volver</a>
+                        }
+                    </ul>
+
+                                
+                   
+
+
+
+
+                            
+               
+
+                    
+                   
+                  
+
+                </div>
+            </div>
+           
+       
+            
+        </div>  
+    </div>   
+
+</section> <!--/#cart_items-->
+ 

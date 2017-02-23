@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Menajes_Maipu.Models.ModeloBD.Producto>
+@{
+    var id = @Session["idPDF"].ToString();
+} 
+@if (id == "10MAS")
+{
+    <a href="@Url.Action("ReportP10MAS", new { id = "PDF" })"> Exportar a PDF</a>
+}
+@if (id == "10MENOS")
+{
+    <a href="@Url.Action("ReportP10MENOS", new { id = "PDF" })"> Exportar a PDF</a>
+}
+@if (id == "10MASTOCK")
+{
+    <a href="@Url.Action("ReportP10MASTOCK", new { id = "PDF" })"> Exportar a PDF</a>
+}
+@if (id == "10MENOSTOCK")
+{
+    <a href="@Url.Action("ReportP10MENOSTOCK", new { id = "PDF" })"> Exportar a PDF</a>
+}
+
+
+
+
+<table class="table table-hover table-bordered table-responsive">
+    <tr>
+        <th>
+            Nombre
+        </th>
+        <th>
+            Descripción
+        </th>
+        <th>
+            Stock
+        </th>
+        <th>
+            Precio
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre_producto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion_producto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stock_producto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio_producto)
+            </td>
+
+        </tr>
+    }
+</table>
+
+@*<a href="@Url.Action("Report",new {id= "Excel"})"> Get Report Excel</a>
+<a href="@Url.Action("Report",new {id= "Word"})"> Get Report Word</a>
+<a href="@Url.Action("Report",new {id= "Image"})"> Get Report Image</a>*@

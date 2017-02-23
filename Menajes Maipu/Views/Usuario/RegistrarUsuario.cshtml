@@ -1,0 +1,156 @@
+﻿@model Menajes_Maipu.Models.ModeloBD.Usuario
+
+@{
+    ViewBag.Title = "RegistrarUsuario";
+}
+<script language="javascript">
+function Valida_Rut( Objeto ) {
+    var tmpstr = "";
+    var intlargo = Objeto.value;
+
+    if (intlargo.length> 0) {
+        crut = Objeto.value;
+        largo = crut.length;
+        if ( largo <2 ) {
+            alert('rut inválido');
+            Objeto.focus();
+            return false;
+        }
+
+        for ( i=0; i <crut.length ; i++ ) {
+            if ( crut.charAt(i) != ' ' && crut.charAt(i) != '.' && crut.charAt(i) != '-' ) {
+                tmpstr = tmpstr + crut.charAt(i);
+            }
+        }
+            rut = tmpstr;
+            crut=tmpstr;
+            largo = crut.length;
+            if ( largo> 2 ){
+                rut = crut.substring(0, largo - 1);
+            }else rut = crut.charAt(0);
+
+                dv = crut.charAt(largo-1);
+                if ( rut == null || dv == null ) return 0;
+                var dvr = '0';
+                suma = 0;
+                mul = 2;
+
+                for (i= rut.length-1 ; i>= 0; i--) {
+                    suma = suma + rut.charAt(i) * mul;
+                    if (mul == 7) mul = 2;
+                    else mul++;
+                }
+
+                res = suma % 11;
+                if (res==1) dvr = 'k';
+                else if (res==0) dvr = '0';
+                else { dvi = 11-res; dvr = dvi + ""; }
+
+                if ( dvr != dv.toLowerCase() ) {
+                    alert('El Rut Ingresado es Invalido');
+                    Objeto.focus();
+                    Objeto.value = "";
+                    return false;
+                }
+
+    }
+}
+</script>
+<div class="container">
+    @if (ViewBag.Error == "Error")
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Campos mal ingresados</strong> Revise nuevamente los campos que ha ingresado.
+        </div>
+    }
+  
+
+    <div class="row" align="center">
+        <h2 class="title text-center">Verifique <strong> sus datos y complete su perfil</strong></h2>
+        <div class="col-sm-12" align="center">
+            <div class="signup-form">
+                <!--sign up form-->
+    
+
+
+                @using (Html.BeginForm("RegistrarUsuario", "Usuario", FormMethod.Post))
+                {
+
+                    @Html.AntiForgeryToken()
+                    <table class="table table-responsive cart_info" border="0">
+
+                        <tr style="background-color:#FE980F">
+
+                            <td align="center" colspan="4"><h4 style="color:white">Registro de Usuarios</h4></td>
+
+                        </tr>
+                        <tr class="active">
+                            <td class="description"><p><b>Rut*</b></p></td>
+                            <td>
+                                @Html.EditorFor(model => model.Rut, new { htmlAttributes = new { @class = "form-control", @placeholder = "Rut", @onBlur = "Valida_Rut(rut)", @id = "rut", @pattern = "[0-9]+", @title = "Solo números" } })
+                                @Html.ValidationMessageFor(model => model.Rut, null, new { @class = "text-danger" })
+                            </td>
+                        </tr>
+                        <tr class="active">
+                            <td class="description"><p><b>Nombre*</b></p></td>
+                            <td>@Html.EditorFor(model => model.Nombre_usuario, new { htmlAttributes = new { @class = "form-control", required = "required", @placeholder = "Nombre", @title = "Caracteres inválidos", @pattern = "[a-zA-Z ]+" } })
+                            @Html.ValidationMessageFor(model => model.Nombre_usuario, "", new { @class = "text-danger" })
+                            </td>
+                        </tr>
+                        <tr class="active">
+                            <td class="description"><p><b>Apellido*</b></p></td>
+                            <td>@Html.EditorFor(model => model.Apellido_usuario, new { htmlAttributes = new { @class = "form-control", required = "required", @placeholder = "Apellido", @title = "Caracteres inválidos", @pattern = "[a-zA-Z ]+" } })
+                            @Html.ValidationMessageFor(model => model.Apellido_usuario, "", new { @class = "text-danger" })
+                            </td>
+                        </tr>
+                        <tr class="active">
+                            <td class="description"><p><b>Email*</b></p></td>
+                            <td>
+                                @Html.EditorFor(model => model.Email_usuario, new { htmlAttributes = new { @class = "form-control", required = "required", @placeholder = "Email",@type="email", @title = "Caracteres inválidos" } })
+                                @Html.ValidationMessageFor(model => model.Email_usuario, "", new { @class = "text-danger" })                                   
+                            </td>
+                        </tr>
+                        <tr class="active">
+                            <td class="description"><p><b>Teléfono</b></p></td>
+                            <td>@Html.EditorFor(model => model.Telefono_usuario, new { htmlAttributes = new { @class = "form-control", required = "required", @placeholder = "Telefono", @type="number", @pattern = "[0-9]", @title = "Ingrese solo números" } })
+                            @Html.ValidationMessageFor(model => model.Telefono_usuario, "", new { @class = "text-danger" })</td>
+                        </tr>
+                        <tr class="active">
+                            <td class="description"><p><b>Contraseña*</b></p></td>
+                            <td>
+                                @Html.EditorFor(model => model.Contrasena, new { htmlAttributes = new { @class = "form-control",@type="password", @placeholder = "Password", required = "required", @pattern = "[a-zA-Z ]+" } })
+                                @Html.ValidationMessageFor(model => model.Contrasena, "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                        <tr class="active">
+                            <td class="description"><p><b>Sexo*</b></p></td>
+                            <td>
+                                @Html.DropDownListFor(model => model.Sexo, new SelectList(
+                                                        new List<Object>{
+                                                        new { value = "Femenino" , text = "Femenino"  },
+                                                        new { value = "Masculino" , text = "Masculino" },
+                                                        },
+                       "value", "text"), new { htmlAttributes = new { @class = "form-control dropdown-menu pull-right" } })
+                            </td>
+                        </tr>
+                     
+                        @Html.EditorFor(model => model.Fecha_registro, new { htmlAttributes = new { @class = "form-control", required = "required", style = "display:none", @Value = DateTime.Now.ToShortDateString() } })
+                        @Html.ValidationMessageFor(model => model.Fecha_registro, "", new { @class = "text-danger" })
+
+
+                        @Html.EditorFor(model => model.Tipo, new { htmlAttributes = new { @class = "form-control", required = "required", style = "display:none", @Value = "3" } })
+                        @Html.ValidationMessageFor(model => model.Tipo, null, new { @class = "text-danger" })
+                    </table>
+     
+
+                    <button type="submit" class="btn btn-default">Registrame</button>
+                }
+
+
+
+
+            </div><!--/sign up form-->
+        </div>
+    </div>
+</div>

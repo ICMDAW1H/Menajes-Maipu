@@ -1,0 +1,294 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@using Menajes_Maipu.Models.ModeloBD;
+
+@{
+    MenajesbdEntities6 ctx = new MenajesbdEntities6();
+
+    ViewBag.Title = "Home Page";
+}
+
+
+
+<section id="slider">
+    <!--slider-->
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-sm-12">
+
+                <div id="slider-carousel" class="carousel slide" data-ride="carousel">
+
+                    <ol class="carousel-indicators">
+                        <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#slider-carousel" data-slide-to="1"></li>
+                        <li data-target="#slider-carousel" data-slide-to="2"></li>
+                        <li data-target="#slider-carousel" data-slide-to="3"></li>
+                    </ol>
+
+                    <div class="carousel-inner">
+                        @foreach (var item in ViewBag.Sactivo)
+                        {
+                            <div class="item active">
+
+                                <div class="col-sm-6">
+                                    <h1><span>O</span>FERTA</h1>
+                                    <h2>@item.Nombre_producto</h2>
+                                    <p>@item.Descripcion_producto</p>
+                                    <a href=@Url.Action("Cart", "Home", new { id = item.Id_producto}) class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Añadir al carro</a>
+                                </div>
+                                <div class="col-sm-6">
+                                    @if (item.Imagen_producto != null)
+                                    {
+
+                                        <div style="margin-left:5px;margin-right:5px;margin-top:5px;margin-bottom:5px;">
+                                            <img width="350" height="300" src="@Url.Action("GetImage", "Home", new { item.Id_producto})" />
+                                        </div>
+                                    }
+
+
+
+                                </div>
+
+
+
+                            </div>
+                        }
+
+
+
+
+                        @foreach (var item in ViewBag.Sitem2)
+                        {
+                            <div class="item">
+
+                                <div class="col-sm-6">
+                                    <h1><span>O</span>FERTA</h1>
+                                    <h2>@item.Nombre_producto</h2>
+                                    <p>@item.Descripcion_producto </p>
+                                    <a href=@Url.Action("Cart", "Home", new { id = item.Id_producto}) class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Añadir al carro</a>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    @if (item.Imagen_producto != null)
+                                    {
+                                        <div style="margin-left:5px;margin-right:5px;margin-top:5px;margin-bottom:5px;">
+                                            <img width="350" height="300" src="@Url.Action("GetImage", "Home", new { item.Id_producto})" />
+                                        </div>
+                                    }
+
+                                </div>
+
+                            </div>
+                        }
+                        @foreach (var item in ViewBag.Sitem3)
+                        {
+                            <div class="item">
+
+                                <div class="col-sm-6">
+                                    <h1><span>O</span>FERTA</h1>
+                                    <h2>@item.Nombre_producto</h2>
+                                    <p>@item.Descripcion_producto </p>
+                                    <a href=@Url.Action("Cart", "Home", new { id = item.Id_producto}) class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Añadir al carro</a>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    @if (item.Imagen_producto != null)
+                                    {
+                                        <div style="margin-left:5px;margin-right:5px;margin-top:5px;margin-bottom:5px;">
+                                            <img width="350" height="300" src="@Url.Action("GetImage", "Home", new { item.Id_producto})" />
+                                        </div>
+                                    }
+
+
+
+                                </div>
+
+                            </div>
+                        }
+
+                        @foreach (var item in ViewBag.Sitem4)
+                        {
+                            <div class="item">
+
+                                <div class="col-sm-6">
+                                    <h1><span>O</span>FERTA</h1>
+                                    <h2>@item.Nombre_producto</h2>
+                                    <p>@item.Descripcion_producto </p>
+                                    <a href=@Url.Action("Cart", "Home", new { id = item.Id_producto}) class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Añadir al carro</a>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    @if (item.Imagen_producto != null)
+                                    {
+                                        <div style="margin-left:5px;margin-right:5px;margin-top:5px;margin-bottom:5px;">
+                                            <img width="350" height="300" src="@Url.Action("GetImage", "Home", new { item.Id_producto})" />
+                                        </div>
+                                    }
+
+
+
+                                </div>
+
+                            </div>
+                        }
+
+
+
+
+
+                    </div>
+
+                    <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section><!--/slider-->
+
+<section>
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-sm-3">
+
+                <div class="left-sidebar">
+
+                    <h2>Categorias</h2>
+
+                    <div class="panel-group category-products" id="accordian">
+                        <!--category-productsr-->
+                        @foreach (var categoria in ViewBag.Categoria)
+                        {
+
+                            <div class="panel panel-default">
+
+                                <div class="panel-heading">
+
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordian" href="#@categoria.Id_categoria">
+                                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                            @categoria.Nombre_categoria
+                                        </a>
+
+                                    </h4>
+
+                                </div>
+
+                                <div id="@categoria.Id_categoria" class="panel-collapse collapse">
+
+                                    <div class="panel-body">
+
+                                        <ul>
+
+                                            @foreach (var subcategoria in ViewBag.Subcategoria)
+                                            {
+                                                if (categoria.Id_categoria == subcategoria.Id_categoria)
+                                                {
+                                                    int id = subcategoria.Id_subcategoria;
+                                                    int cantidad = ctx.Producto.Where(c => c.Id_subcategoria == id).Count();
+
+                                                    <li><a href=@Url.Action("Getsubcategoria", "Home", new { Id_subcategoria= @subcategoria.Id_subcategoria })>@subcategoria.Nombre_subcategoria </a>(@cantidad)</li>
+                                                }
+                                            }
+
+
+                                        </ul>
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+                        }
+                        @*<div class="price-range">
+                            price-range
+                            <h2>Filtrar por precio</h2>
+                            <div class="well text-center">
+                                <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[250,450]" id="sl2"><br />
+                                <b class="pull-left">$ 0</b> <b class="pull-right">$ 600</b>
+                            </div>
+                        </div>*@
+                    </div>
+                    </div><!--/category-products-->
+
+                </div>
+              
+          
+
+                <div class="features_items">
+                    <!--features_items-->
+
+                    <h2 class="title text-center">Listado de productos</h2>
+
+                    @foreach (Producto producto in ViewBag.Productos)
+                    {
+
+                        <div class="col-sm-4">
+
+                            <div class="product-image-wrapper">
+                                <a href=@Url.Action("DetalleProducto","Home", new { Id=producto.Id_producto})>
+                                    <div class="single-products">
+
+                                        <div class="productinfo text-center">
+
+                                            @if (producto.Imagen_producto != null)
+                                            {
+                                                <div style="margin-left:5px;margin-right:5px;margin-top:5px;margin-bottom:5px;">
+                                                    <img width="225" height="300" src="@Url.Action("GetImage", "Home", new { producto.Id_producto})" />
+                                                </div>
+                                            }
+
+                                            <h2>@producto.Nombre_producto</h2>
+
+                                            <h3>$ @producto.Precio_producto</h3>
+
+                                            <a href=@Url.Action("Cart", "Home", new{ Id = producto.Id_producto}) class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Añadir al carro</a>
+
+                                        </div>
+
+                                    </div>
+                                </a>
+                            </div>
+
+                        </div>
+
+                    }
+
+                    <ul class="pagination">
+                        <li>
+                            @Html.PagedListPager((IPagedList)ViewBag.Productos, page => Url.Action("Index", new { page }))
+                        </li>
+                    </ul>
+
+                </div><!--features_items-->
+
+                
+
+
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+</section>

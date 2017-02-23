@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Menajes_Maipu.Models.ModeloBD.Usuario>
+@{
+    var id = @Session["idPDF"].ToString();
+}
+@if (id == "TRABALL")
+{
+    <a href="@Url.Action("ReportTRABALL", new { id = "PDF" })"> Exportar a PDF</a>
+}
+@if (id == "CLIALL")
+{
+    <a href="@Url.Action("ReportCLIALL", new { id = "PDF" })"> Exportar a PDF</a>
+}
+
+
+
+<table class="table table-hover table-bordered table-responsive">
+    <tr>
+        <th>
+         Nombre
+        </th>
+        <th>
+         Apellido
+        </th>
+        <th>
+         Email
+        </th>
+        <th>
+         Teléfono
+        </th>
+
+        <th>
+         Fecha
+        </th>
+       
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre_usuario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Apellido_usuario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email_usuario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Telefono_usuario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fecha_registro)
+        </td>
+    </tr>
+}
+
+</table>

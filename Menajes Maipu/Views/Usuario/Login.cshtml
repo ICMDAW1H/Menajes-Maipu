@@ -1,0 +1,151 @@
+﻿
+
+@model Menajes_Maipu.Models.ModeloBD.Usuario
+
+@{
+    ViewBag.Title = "Log in";
+
+}
+
+<script language="javascript">
+function envio_exitoso() {
+    alert('Estimado Usuario \n Su contraseña ha sido cambiada  \n Vuelva a ingresar sus datos de session.  \n \n \n Atte Administracion Menajes Maipú');
+                         }
+</script>
+<!--#contact-page-->
+@if (Session["cpw"] == null)
+{
+    Session["cpw"] = 1;
+}
+@if (Session["cpw"].ToString() == "true")
+{
+    <script type="text/javascript">
+        envio_exitoso();
+    </script>
+}
+
+
+<script language="javascript">
+function Valida_Rut( Objeto ) {
+    var tmpstr = "";
+    var intlargo = Objeto.value;
+
+    if (intlargo.length> 0) {
+        crut = Objeto.value;
+        largo = crut.length;
+        if ( largo <2 ) {
+            alert('rut inválido');
+            Objeto.focus();
+            return false;
+        }
+
+        for ( i=0; i <crut.length ; i++ ) {
+            if ( crut.charAt(i) != ' ' && crut.charAt(i) != '.' && crut.charAt(i) != '-' ) {
+                tmpstr = tmpstr + crut.charAt(i);
+            }
+        }
+            rut = tmpstr;
+            crut=tmpstr;
+            largo = crut.length;
+            if ( largo> 2 ){
+                rut = crut.substring(0, largo - 1);
+            }else rut = crut.charAt(0);
+
+                dv = crut.charAt(largo-1);
+                if ( rut == null || dv == null ) return 0;
+                var dvr = '0';
+                suma = 0;
+                mul = 2;
+
+                for (i= rut.length-1 ; i>= 0; i--) {
+                    suma = suma + rut.charAt(i) * mul;
+                    if (mul == 7) mul = 2;
+                    else mul++;
+                }
+
+                res = suma % 11;
+                if (res==1) dvr = 'k';
+                else if (res==0) dvr = '0';
+                else { dvi = 11-res; dvr = dvi + ""; }
+
+                if ( dvr != dv.toLowerCase() ) {
+                    alert('El Rut Ingreso es Invalido');
+                    Objeto.focus();
+                    Objeto.value = "";
+                    return false;
+                }
+
+    }
+}
+</script>
+
+<section id="form">
+    <!--form-->
+    <div class="container">
+
+        @if (ViewBag.Exito == "Exito")
+        {
+            <div class="alert alert-success alert-dismissable" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Felicitaciones</strong> Usted se ha registrado a Menajes Maipú.
+            </div>
+        }
+        <div class="row">
+           
+            <div class="col-sm-4 col-sm-offset-1">
+                <div class="login-form">
+                    <!--login form-->
+                    <h2><b>Ingresa con tu cuenta</b></h2>
+                    @using (Html.BeginForm("Login", "Usuario", FormMethod.Post, new { @id = "formLogOn", @class = "form-horizontal form-label-left" }))
+                    {
+
+                        @Html.TextBoxFor(m => m.Email_usuario, new { @class = "form-control", @placeholder = "Correo electronico" })
+                        @Html.ValidationMessageFor(m => m.Email_usuario, "", new { @class = "text-danger" })
+
+                        @Html.PasswordFor(m => m.Contrasena, new { @class = "form-control", @placeholder = "Password" })
+                        @Html.ValidationMessageFor(m => m.Contrasena, "", new { @class = "text-danger" })
+                        <button type="submit" class="btn btn-default">Ingresar</button>
+                
+                    }
+                </div><!--/login form-->
+            </div>
+
+           
+
+            <div class="col-sm-4">
+                <div class="signup-form">
+                    <!--sign up form-->
+                    <h2><b>Registrate</b></h2>
+
+                    <!--Pendiente a revision-->
+                    @using (Html.BeginForm("RegistrarUsuario", "Usuario", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        @Html.EditorFor(model => model.Tipo, new { htmlAttributes = new { @class = "form-control", @required = "required", style = "display:none", @Value = "3" } })
+                        @Html.ValidationMessageFor(model => model.Tipo, null, new { @class = "text-danger" })
+                       
+                        @Html.EditorFor(model => model.Rut, new { htmlAttributes = new { @class = "form-control", @placeholder = "Rut", @onBlur="Valida_Rut(rut)", @id="rut", @required = "required", @pattern = "[0-9]+", @title = "Solo números" } })
+                        @Html.ValidationMessageFor(model => model.Rut, null, new { @class = "text-danger" })
+
+                        @Html.EditorFor(model => model.Nombre_usuario, new { htmlAttributes = new { @class = "form-control", @required = "required", @placeholder = "Nombre", @pattern = "[a-zA-Z ]+", @title = "Caracteres inválidos" } })
+                        @Html.ValidationMessageFor(model => model.Nombre_usuario, "", new { @class = "text-danger" })
+
+                        @Html.EditorFor(model => model.Apellido_usuario, new { htmlAttributes = new { @class = "form-control", @required = "required", @placeholder = "Apellido", @pattern = "[a-zA-Z ]+", @title = "Caracteres inválidos" } })
+                        @Html.ValidationMessageFor(model => model.Apellido_usuario, "", new { @class = "text-danger" })
+
+                        @Html.EditorFor(model => model.Email_usuario, new { htmlAttributes = new { @class = "form-control", @required = "required", @placeholder = "Email", @type="email"} })
+                        @Html.ValidationMessageFor(model => model.Email_usuario, "", new { @class = "text-danger" })
+
+
+
+                        <button type="submit" class="btn btn-default">Registrame</button>
+                    }
+                    <!--Pendiente a revision-->
+
+                </div><!--/sign up form-->
+            </div>
+        </div>
+    </div>
+</section><!--/form-->
+

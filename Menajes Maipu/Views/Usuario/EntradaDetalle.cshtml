@@ -1,0 +1,99 @@
+﻿
+@model Menajes_Maipu.Models.ModeloBD.Mensaje_consulta
+@{
+    ViewBag.Title = "EntradaDetalle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var id = Session["id"];
+}
+
+<div id="contact-page" class="container">
+
+    <div class="bg">
+
+        <div class="row">
+
+            <div class="col-sm-12">
+
+                <div class="contact-form">
+
+                    <h2 class="title text-center">Detalle del mensaje</h2>
+
+                    <div class="status alert alert-success" style="display: none"></div>
+
+                 @using (Html.BeginForm("", "", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal form-label-left" }))
+                 {
+
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-group col-md-4">
+                            <label for="name" class="control-label col-md-3 col-sm-8 col-xs-4 pull-right">
+                                Fecha
+                            </label>
+                        </div>
+
+                        <div class="form-group col-md-8">
+                            @foreach (var item in ViewBag.listarid)
+                            {
+                                @Html.TextBoxFor(Model => Model.Fecha, new { @readonly = "readonly", @Value = @item.Fecha, @class = "form-control" })
+                            }
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="name" class="control-label col-md-3 col-sm-8 col-xs-4 pull-right">
+                                Motivo
+                            </label>
+                        </div>
+
+                        <div class="form-group col-md-8">
+                            @foreach (var item in ViewBag.listarid)
+                            {
+                                @Html.TextBoxFor(Model => Model.Motivo_consulta, new { @readonly = "readonly", @Value = @item.Motivo_consulta, @class = "form-control" })
+                            }
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="Mensaje" class="control-label col-md-3 col-sm-8 col-xs-4 pull-right">
+                                Mensaje
+                            </label>
+                        </div>
+
+                        <div class="form-group col-md-8">
+                            @foreach (var item in ViewBag.listarid)
+                            {
+                                <textarea readonly name="Mensaje" id="Mensaje" required class="form-control">@item.Mensaje</textarea>
+                            }
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="Respuesta" class="control-label col-md-3 col-sm-8 col-xs-4 pull-right">
+                                Respuesta
+                            </label>
+                        </div>
+
+                        <div class="form-group col-md-8">
+                            @foreach (var item in ViewBag.listarid)
+                            {
+                                <textarea readonly name="Mensaje" id="Mensaje" required class="form-control">@item.Respuesta_consulta</textarea>
+                            }
+                        </div>
+
+
+
+
+                        <div class="form-group col-md-12" align="center">
+                            @Html.ActionLink("Volver al listado", "BuzonEntrada", "Usuario", new { id = @id }, new { @class = "btn btn-info" })
+                        </div>
+
+                    }
+
+                </div>
+
+            </div>
+
+            
+
+        </div>
+
+    </div>
+
+</div>

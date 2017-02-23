@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Menajes Maipu", "Menajes Maipu\Menajes Maipu.csproj", "{7B2A3094-AB49-4A9E-A00F-738E05AA4F6B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7B2A3094-AB49-4A9E-A00F-738E05AA4F6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B2A3094-AB49-4A9E-A00F-738E05AA4F6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B2A3094-AB49-4A9E-A00F-738E05AA4F6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B2A3094-AB49-4A9E-A00F-738E05AA4F6B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

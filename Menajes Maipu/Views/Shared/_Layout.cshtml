@@ -1,0 +1,189 @@
+﻿@using Menajes_Maipu.Models.ModeloBD;
+@using Menajes_Maipu.Controllers;
+@{
+    MenajesbdEntities6 ctx = new MenajesbdEntities6();
+  
+}
+<!DOCTYPE html>
+<html>
+
+<head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Menajes Maipu</title>
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/prettyPhoto.css" rel="stylesheet" />
+    <link href="~/Content/price-range.css" rel="stylesheet" />
+    <link href="~/Content/animate.css" rel="stylesheet" />
+    <link href="~/Content/main.css" rel="stylesheet" />
+    <link href="~/Content/responsive.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/image.css" rel="stylesheet" />
+</head><!--/head-->
+
+<body>
+    <header id="header">
+        <!--header-->
+        <div class="header_top">
+            <!--header_top-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="contactinfo">
+                            <ul class="nav nav-pills">
+                                <li><a href="#"><i class="fa fa-phone"></i> +56 0412 913855</a></li>
+                                <li><a href="mailto:contacto@menajesmaipu.cl"><i class="fa fa-envelope"></i>contacto@menajesmaipu.cl</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="social-icons pull-right">
+                            <ul class="nav navbar-nav">
+                                <li><a href="https://www.facebook.com/Menajes-Maip%C3%BA-846511202054884/"><i class="fa fa-facebook"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--/header_top-->
+
+        <div class="header-middle">
+            <!--header-middle-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="logo pull-left">
+                            <a href=@Url.Action("Index","Home")><img src="~/Content/Menajes_layout/logomm sin fondo.png" /></a>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-8">
+                        <div class="mainmenu pull-right">
+                            <ul class="nav navbar-nav collapse navbar-collapse">
+                            @if (@Session["user"] != null)
+                            {
+                                if (Session["cart"] != null)
+                                {
+                                    var carro = (List<Item>)Session["cart"];
+                                    var contarcarro = carro.Count().ToString();
+                                <li><a href=@Url.Action("Cart", "Home", new { id = 0 })><i class="fa fa-shopping-cart"></i> Carrito<span class="badge">@contarcarro</span></a></li>
+                                }
+                                else
+                                {
+                                    <li><a href=@Url.Action("Cart", "Home", new { id = 0 })><i class="fa fa-shopping-cart"></i> Carrito<span class="badge">0</span></a></li>
+
+                                }
+                                <li class="dropdown">
+                                  <a href=@Url.Action("Login", "Usuario")>Bienvenido @Session["user"] <i class="fa fa-angle-down"></i> </a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href=@Url.Action("Pedidos", "Usuario", new { id= @Session["id"], estado=0 })>Mis Pedidos</a></li>
+                                        <li><a href=@Url.Action("BuzonEntrada", "Usuario", new { id= @Session["id"] })>Bandeja de Entrada</a></li>
+                                        <li><a href=@Url.Action("EditCliente", "Usuario", new { id= @Session["id"] })>Editar Perfil</a></li>
+                                        <li><a href=@Url.Action("EditPassword", "Usuario", new { id= @Session["id"] })>Modificar Contraseña</a></li>
+
+                                        @using (Html.BeginForm("LogOff", "Usuario"))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <li><button type="submit" value="@Session["id"]" class="btn btn-default btn-block">Cerrar sesion</button></li>
+                                        }
+
+
+                                    </ul>
+                                </li>
+                            }
+                            else
+                            {
+                                if (Session["cart"] != null)
+                                {
+                                    var carro = (List<Item>)Session["cart"];
+                                    var contarcarro = carro.Count().ToString();
+                                    <li><a href=@Url.Action("Cart", "Home", new { id= 0 } )><i class="fa fa-shopping-cart"></i> Carrito<span class="badge">@contarcarro</span></a></li>
+                                    <li><a href=@Url.Action("Login", "Usuario" )><i class="fa fa-user"></i> Iniciar sesion</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href=@Url.Action("Cart", "Home", new { id= 0 } )><i class="fa fa-shopping-cart"></i> Carrito<span class="badge">0</span></a></li>
+                                    <li><a href=@Url.Action("Login", "Usuario" )><i class="fa fa-user"></i> Iniciar sesion</a></li>
+                                }
+                            }
+
+</ul>
+                        </div>
+
+                        
+                    </div>
+                </div>
+            </div>
+        </div><!--/header-middle-->
+
+        <div class="header-bottom">
+            <!--header-bottom-->
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-sm-9">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+
+                        <div class="mainmenu pull-left">
+                            <ul class="nav navbar-nav collapse navbar-collapse">
+                                <li>@Html.ActionLink("Productos", "Index", "Home")</li>
+                                <li>@Html.ActionLink("Historia", "About","Home")</li>
+                                <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="search_box pull-right">
+                            @using (Html.BeginForm("Getbusqueda", "Home", FormMethod.Get))
+                            {
+                                <input type="text" placeholder="Buscar producto" name="buscarproducto" id="buscarproducto" pattern="[^'\x22<>]+" title="Caracteres inválidos" />
+                            }
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div><!--/header-bottom-->
+
+    </header><!--/header-->
+
+    @RenderBody()
+
+    <footer>
+        <!--/Footer-->
+
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <p class="pull-left">Copyright © 2015 Menajes Maipu. Todos los derechos reservados.</p>
+                    <p class="pull-right">Diseñado por <span><a target="_blank" href="#">RGL dev</a></span></p>
+                </div>
+            </div>
+        </div>
+
+    </footer><!--/Footer-->
+
+    <!--Area de scripts-->
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.scrollUp.min.js"></script>
+    <script src="~/Scripts/price-range.js"></script>
+    <script src="~/Scripts/jquery.prettyPhoto.js"></script>
+    <script src="~/Scripts/main.js"></script>
+    <!--/Area de scripts-->
+    <script src="~/Scripts/bootstrap-checkbox.js"></script>
+    <script src="~/Scripts/bootstrap-checkbox.min.js"></script>
+</body>
+
+</html>

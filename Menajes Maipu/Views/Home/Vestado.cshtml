@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string validar = ViewBag.estado;
+}
+<div class="container text-center">
+    @if (validar == "0")
+    {
+        <div class="content-404">
+            @*<img src="~/Content/Imagenes estaticas/404.png" class="img-rounded  img-responsive" width="46%" height="46%" />*@
+            <h1><b>OPPS!</b> No hemos podido actualizar el estado del deposito</h1>
+            <p>Ups...al parecer la acción que usted realizó ha sido removida o no existe.</p>
+            <h2><a href=@Url.Action("Index","Home")>Volver a la Página Principal</a></h2>
+        </div>
+    }
+    @if (validar == "1")
+    {
+        <div class="content-404">
+            @*<img src="~/Content/Imagenes estaticas/404.png" class="img-rounded  img-responsive" width="46%" height="46%" />*@
+            <h1><b>Datos Ingresados!</b> Su estado de deposito ha sido actualizado</h1>
+            <p>Estimado Cliente, hemos recibido su actualizacion de la venta, en estos momentos nuestro personal está revisando los datos ingresados.
+            por lo cual el estado de su venta ha sido cambiado a <b>VERIFICANDO</b>
+            </p>
+            <h2><a href=@Url.Action("Index","Home")>Volver a la Página Principal</a></h2>
+        </div>
+    }
+   
+</div>

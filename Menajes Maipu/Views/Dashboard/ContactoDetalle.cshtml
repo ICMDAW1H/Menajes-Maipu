@@ -1,0 +1,159 @@
+﻿@model Menajes_Maipu.Models.ModeloBD.Contacto
+
+@{
+    var user = Session["user"];
+    var id = Session["id"];
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Ladmin.cshtml";
+}
+
+<!— page content —>
+<div class="right_col" role="main">
+
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>
+                    Mensajes Publicos
+                </h3>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Detalle del mensaje</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+
+
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+
+                        @using (Html.BeginForm("", "", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal form-label-left" }))
+                        {
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                                    Fecha <span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @foreach (var item in ViewBag.Contacto)
+                                    {
+
+                                        @Html.TextBoxFor(model => model.Fecha, new { @readonly = "readonly", @Value = @item.Fecha, @class = "form-control" })
+
+                                    }
+                                </div>
+                            </div>
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                                    Nombre <span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @foreach (var item in ViewBag.Contacto)
+                                    {
+
+                                        @Html.TextBoxFor(model => model.Nombre_contacto, new { @readonly = "readonly", @Value = @item.Nombre_contacto, @class = "form-control" })
+
+                                    }
+                                </div>
+                            </div>
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">
+                                    Email <span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @foreach (var item in ViewBag.Contacto)
+                                    {
+
+                                        @Html.TextBoxFor(model => model.Email_contacto, new { @readonly = "readonly", @class = "form-control", @Value = @item.Email_contacto })
+
+
+                                    }
+                                </div>
+                            </div>
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">
+                                    Asunto <span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @foreach (var item in ViewBag.Contacto)
+                                    {
+                                        @Html.TextBoxFor(model => model.Asunto_contacto, new { @readonly = "readonly", @class = "form-control", @Value = @item.Asunto_contacto })
+
+
+                                    }
+                                </div>
+                            </div>
+
+
+                            <div class="item form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">
+                                    Mensaje <span class="required"></span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @foreach (var item in ViewBag.Contacto)
+                                    {
+                                        <textarea readonly class="form-control">
+                                            @item.Mensaje_contacto
+                                        </textarea>
+
+                                    }
+
+
+                                </div>
+                            </div>
+
+                        }
+
+                        <span class="section"></span>
+
+
+
+
+                        @using (Html.BeginForm("ContactoDetalle", "Dashboard", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal form-label-left" }))
+                        {
+
+                            @Html.HiddenFor(model => model.Id_contacto)
+                            @Html.HiddenFor(model => model.Email_contacto)
+
+
+                            <div class="form-actions no-color" align="Center">
+                                @foreach (var item in ViewBag.Contacto)
+                                {
+                                    if (item.Estado != "Respondido")
+                                    {
+                                        <input type="submit" value="Marcar como leido" class="btn btn-danger" />
+                                    }
+                                }
+                                @Html.ActionLink("Volver al listado", "ContactoList", new { }, new { @class = "btn btn-info" })
+                            </div>
+                        }
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!— footer content —>
+    <footer>
+        <div class="">
+            <p class="pull-right">
+                <a>RGL</a>
+            </p>
+        </div>
+        <div class="clearfix"></div>
+    </footer>
+    <!— /footer content —>
+
+</div>
+<!— /page content —>
