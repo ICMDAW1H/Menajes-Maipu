@@ -9,6 +9,7 @@ using PagedList;
 using System.Collections.Generic;
 using Microsoft.Reporting.WebForms;
 using System.IO;
+using System.Data.Entity;
 
 namespace Menajes_Maipu.Controllers
 {
@@ -24,6 +25,7 @@ namespace Menajes_Maipu.Controllers
         private  UsuarioDAL DALusuario = new UsuarioDAL();
         private Metodo_pago MetodoPago = new Metodo_pago();
         Despacho Despacho = new Despacho();
+
         public ActionResult VerificaEstado(string estado)
         {
             try
@@ -470,21 +472,22 @@ namespace Menajes_Maipu.Controllers
         //Listar- Pagina de inicio (Productos)
         public ActionResult Index(int? page)
         {
-                ViewBag.Sactivo = db.Producto.Where(p => p.Tipo == 1).ToList();
-                ViewBag.Sitem2 = db.Producto.Where(p => p.Tipo == 2).ToList();
-                ViewBag.Sitem3 = db.Producto.Where(p => p.Tipo == 3).ToList();
-                ViewBag.Sitem4 = db.Producto.Where(p => p.Tipo == 4).ToList();
-                ViewBag.Categoria = DALcategoria.Listarcindex();
-                ViewBag.Subcategoria = DALsubcategoria.Listar();
+            ViewBag.Categoria = DALcategoria.Listarcindex();
 
-                var products = DALproducto.Listarpindex();
+            ViewBag.Slide = GetSlideDal(db.Producto);
+            var products = DALproducto.Listarpindex();
 
-                var pageNumber = page ?? 1;
-                ViewBag.Productos = products.ToPagedList(pageNumber, 6);
+            var pageNumber = page ?? 1;
+            ViewBag.Productos = products.ToPagedList(pageNumber, 6);
 
 
-                return View(); 
+            return View();
         }
+
+        private List<Producto> GetSlideDal(DbSet<Producto> producto) => (from p in producto
+                                                                         where p.Tipo >= 1 && p.Tipo <= 4
+                                                                          select p).ToList();
+
         //Fin- Pagina de inicio (Productos)
 
         //Inicio Acerca de la empresa

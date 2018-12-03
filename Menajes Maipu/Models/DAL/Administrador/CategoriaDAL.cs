@@ -21,18 +21,14 @@ namespace Menajes_Maipu.Models.DAL.Administrador
         {
             MenajesbdEntities6 ctx = new MenajesbdEntities6();
             var lista = (from o in ctx.Categoria
-                         select new
-                         {
-                             o.Id_categoria,
-                             o.Nombre_categoria
-                         });
-            var lista2 = (from o in lista.AsEnumerable()
-                          select new Categoria
-                          {
-                              Id_categoria = o.Id_categoria,
-                              Nombre_categoria = o.Nombre_categoria 
-                          });
-            return lista2.ToList();
+                         select o).ToList();
+            //var lista2 = (from o in lista.AsEnumerable()
+            //              select new Categoria
+            //              {
+            //                  Id_categoria = o.Id_categoria,
+            //                  Nombre_categoria = o.Nombre_categoria 
+            //              });
+            return lista;
         }
 
 
